@@ -4,7 +4,7 @@ class ReminderItemListCell: UITableViewCell {
     
     //MARK: - Variables
     static let indetifier = "ReminderItemListCell"
-    private var reminder: Reminder?
+    private var reminder: Reminder!
     var buttonAction: (() -> Void)?
     
     //MARK: - UI Components
@@ -35,9 +35,12 @@ class ReminderItemListCell: UITableViewCell {
     
     //MARK: - Selectors
     @objc func didTapCompleteButton() {
-        reminder?.isComplete.toggle()
+        doneButton.isSelected = !doneButton.isSelected
+        reminder.isComplete = doneButton.isSelected
+        
         buttonAction?()
         updateButton()
+        print("\(reminder.isComplete)")
     }
     
     func updateButton() {
@@ -56,7 +59,7 @@ extension ReminderItemListCell {
     }
     
     private func setupCompleteButton() {
-        addSubview(doneButton)
+        contentView.addSubview(doneButton)
         
         NSLayoutConstraint.activate([
             doneButton.centerYAnchor.constraint(equalTo: centerYAnchor),
@@ -67,7 +70,7 @@ extension ReminderItemListCell {
     }
     
     private func setupInfoStackLabel() {
-        addSubview(titleLabel)
+        contentView.addSubview(titleLabel)
         
         NSLayoutConstraint.activate([
             titleLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 16),
@@ -78,7 +81,7 @@ extension ReminderItemListCell {
     }
     
     private func setupMarkMoreImage() {
-        addSubview(markMore)
+        contentView.addSubview(markMore)
 
         NSLayoutConstraint.activate([
             markMore.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
@@ -95,7 +98,7 @@ extension ReminderItemListCell {
 //MARK: - Make UI
 extension ReminderItemListCell {
     private func completeButton() -> UIButton {
-        let btn = UIButton(type: .system)
+        let btn = UIButton()
         btn.translatesAutoresizingMaskIntoConstraints = false
         btn.addTarget(self, action: #selector(didTapCompleteButton), for: .touchUpInside)
         return btn

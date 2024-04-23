@@ -65,10 +65,11 @@ extension ReminderListViewController: UITableViewDataSource, UITableViewDelegate
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: ReminderItemListCell.indetifier, for: indexPath) as!
         ReminderItemListCell
-        cell.configure(with: reminderItem[indexPath.row])
-        cell.buttonAction = {
-            print("Tappp")
-        }
+        let item = reminderItem[indexPath.row]
+        cell.configure(with: item)
+//        cell.buttonAction = {
+//            print("\(item.isComplete)")
+//        }
         cell.selectionStyle = .none
         
         return cell
