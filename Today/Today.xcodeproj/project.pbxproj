@@ -16,6 +16,12 @@
 		C8FCFA252BD7C0B50018BB63 /* TodayUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8FCFA242BD7C0B50018BB63 /* TodayUITests.swift */; };
 		C8FCFA272BD7C0B50018BB63 /* TodayUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8FCFA262BD7C0B50018BB63 /* TodayUITestsLaunchTests.swift */; };
 		C8FCFA362BD7C15E0018BB63 /* qw.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8FCFA352BD7C15E0018BB63 /* qw.swift */; };
+		C8FCFA3A2BD7CCFE0018BB63 /* Remidner.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8FCFA392BD7CCFE0018BB63 /* Remidner.swift */; };
+		C8FCFA3F2BD7CD8D0018BB63 /* ReminderItemListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8FCFA3E2BD7CD8D0018BB63 /* ReminderItemListCell.swift */; };
+		C8FCFA422BD7CE030018BB63 /* ReminderCreationCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8FCFA412BD7CE030018BB63 /* ReminderCreationCell.swift */; };
+		C8FCFA452BD7D2730018BB63 /* UIFont.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8FCFA442BD7D2730018BB63 /* UIFont.swift */; };
+		C8FCFA472BD7D2F90018BB63 /* UIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8FCFA462BD7D2F90018BB63 /* UIView.swift */; };
+		C8FCFA492BD7D31E0018BB63 /* Date+Today.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8FCFA482BD7D31E0018BB63 /* Date+Today.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -49,6 +55,12 @@
 		C8FCFA242BD7C0B50018BB63 /* TodayUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayUITests.swift; sourceTree = "<group>"; };
 		C8FCFA262BD7C0B50018BB63 /* TodayUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		C8FCFA352BD7C15E0018BB63 /* qw.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = qw.swift; sourceTree = "<group>"; };
+		C8FCFA392BD7CCFE0018BB63 /* Remidner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Remidner.swift; sourceTree = "<group>"; };
+		C8FCFA3E2BD7CD8D0018BB63 /* ReminderItemListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReminderItemListCell.swift; sourceTree = "<group>"; };
+		C8FCFA412BD7CE030018BB63 /* ReminderCreationCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReminderCreationCell.swift; sourceTree = "<group>"; };
+		C8FCFA442BD7D2730018BB63 /* UIFont.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIFont.swift; sourceTree = "<group>"; };
+		C8FCFA462BD7D2F90018BB63 /* UIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIView.swift; sourceTree = "<group>"; };
+		C8FCFA482BD7D31E0018BB63 /* Date+Today.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Today.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -99,7 +111,10 @@
 		C8FCFA022BD7C0B30018BB63 /* Today */ = {
 			isa = PBXGroup;
 			children = (
-				C8FCFA372BD7C16B0018BB63 /* ReminderList */,
+				C8FCFA432BD7D2690018BB63 /* Extension */,
+				C8FCFA382BD7CCF50018BB63 /* Model */,
+				C8FCFA3B2BD7CD170018BB63 /* View */,
+				C8FCFA372BD7C16B0018BB63 /* Controller */,
 				C8FCFA332BD7C1150018BB63 /* Delegate */,
 				C8FCFA342BD7C1220018BB63 /* Support File */,
 			);
@@ -142,13 +157,64 @@
 			path = "Support File";
 			sourceTree = "<group>";
 		};
-		C8FCFA372BD7C16B0018BB63 /* ReminderList */ = {
+		C8FCFA372BD7C16B0018BB63 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				C8FCFA3C2BD7CD340018BB63 /* ReminderListViewController */,
+				C8FCFA3D2BD7CD470018BB63 /* EditorViewController */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		C8FCFA382BD7CCF50018BB63 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				C8FCFA392BD7CCFE0018BB63 /* Remidner.swift */,
+				C8FCFA482BD7D31E0018BB63 /* Date+Today.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		C8FCFA3B2BD7CD170018BB63 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				C8FCFA402BD7CD970018BB63 /* UITableViewCell */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		C8FCFA3C2BD7CD340018BB63 /* ReminderListViewController */ = {
 			isa = PBXGroup;
 			children = (
 				C8FCFA072BD7C0B30018BB63 /* ReminderListViewController.swift */,
+			);
+			path = ReminderListViewController;
+			sourceTree = "<group>";
+		};
+		C8FCFA3D2BD7CD470018BB63 /* EditorViewController */ = {
+			isa = PBXGroup;
+			children = (
 				C8FCFA352BD7C15E0018BB63 /* qw.swift */,
 			);
-			path = ReminderList;
+			path = EditorViewController;
+			sourceTree = "<group>";
+		};
+		C8FCFA402BD7CD970018BB63 /* UITableViewCell */ = {
+			isa = PBXGroup;
+			children = (
+				C8FCFA3E2BD7CD8D0018BB63 /* ReminderItemListCell.swift */,
+				C8FCFA412BD7CE030018BB63 /* ReminderCreationCell.swift */,
+			);
+			path = UITableViewCell;
+			sourceTree = "<group>";
+		};
+		C8FCFA432BD7D2690018BB63 /* Extension */ = {
+			isa = PBXGroup;
+			children = (
+				C8FCFA442BD7D2730018BB63 /* UIFont.swift */,
+				C8FCFA462BD7D2F90018BB63 /* UIView.swift */,
+			);
+			path = Extension;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -281,10 +347,16 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C8FCFA422BD7CE030018BB63 /* ReminderCreationCell.swift in Sources */,
+				C8FCFA492BD7D31E0018BB63 /* Date+Today.swift in Sources */,
 				C8FCFA082BD7C0B30018BB63 /* ReminderListViewController.swift in Sources */,
+				C8FCFA3A2BD7CCFE0018BB63 /* Remidner.swift in Sources */,
 				C8FCFA042BD7C0B30018BB63 /* AppDelegate.swift in Sources */,
+				C8FCFA452BD7D2730018BB63 /* UIFont.swift in Sources */,
 				C8FCFA062BD7C0B30018BB63 /* SceneDelegate.swift in Sources */,
 				C8FCFA362BD7C15E0018BB63 /* qw.swift in Sources */,
+				C8FCFA472BD7D2F90018BB63 /* UIView.swift in Sources */,
+				C8FCFA3F2BD7CD8D0018BB63 /* ReminderItemListCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
