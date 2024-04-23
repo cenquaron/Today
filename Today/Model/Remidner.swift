@@ -8,7 +8,35 @@ struct Reminder: Equatable, Identifiable {
     var notes: String? = nil
     var isComplete: Bool = false
 }
-//
+
+extension EKEventStore {
+    func reminders(matching predicate: NSPredicate) async throws -> [EKReminder] {
+        try await withCheckedThrowingContinuation { continuation in
+            fetchReminders(matching: predicate) { reminders in
+                if let reminders {
+                    continuation.resume(returning: reminders)
+                } else {
+                    continuation.resume(throwing: TodayError.failedReadingReminders)
+                }
+            }
+        }
+    }
+}
+
+
+extension Reminder {
+    init(with ekReminder: EKReminder) throws {
+        guard let dueDate = ekReminder.alarms?.first?.absoluteDate else {
+            throw TodayError.reminderHasNoDueDate
+        }
+        id = ekReminder.calendarItemIdentifier
+        title = ekReminder.title
+        self.dueDate = dueDate
+        notes = ekReminder.notes
+        isComplete = ekReminder.isCompleted
+    }
+}
+
 
 #if DEBUG
 extension Reminder {

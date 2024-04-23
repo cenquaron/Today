@@ -70,13 +70,15 @@ extension ReminderItemListCell {
     }
     
     private func setupInfoStackLabel() {
-        contentView.addSubview(titleLabel)
+        contentView.addSubview(infoStackView)
+        infoStackView.addArrangedSubview(titleLabel)
+        infoStackView.addArrangedSubview(dateLabel)
+        dateLabel.font = .footnote
         
         NSLayoutConstraint.activate([
-            titleLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 16),
-            titleLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -16),
-            titleLabel.leadingAnchor.constraint(equalTo: doneButton.trailingAnchor, constant: 12),
-            titleLabel.trailingAnchor.constraint(equalTo: markMore.trailingAnchor, constant: -16)
+            infoStackView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 5),
+            infoStackView.leadingAnchor.constraint(equalTo: doneButton.trailingAnchor, constant: 12),
+            infoStackView.trailingAnchor.constraint(equalTo: markMore.trailingAnchor, constant: -16),
         ])
     }
     
@@ -109,7 +111,6 @@ extension ReminderItemListCell {
         label.translatesAutoresizingMaskIntoConstraints = false
         label.font = .systemFont(ofSize: 16)
         label.textColor = .labelPrimary
-        label.numberOfLines = 3
         return label
     }
     

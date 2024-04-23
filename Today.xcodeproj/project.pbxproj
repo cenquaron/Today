@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		C82942E12BD821BB0004E1BC /* ReminderStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = C82942E02BD821BB0004E1BC /* ReminderStore.swift */; };
+		C82942E32BD821CE0004E1BC /* TodayError.swift in Sources */ = {isa = PBXBuildFile; fileRef = C82942E22BD821CE0004E1BC /* TodayError.swift */; };
+		C82942E52BD822130004E1BC /* ReminderListStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = C82942E42BD822130004E1BC /* ReminderListStyle.swift */; };
+		C82942E92BD82A860004E1BC /* ProgressHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C82942E82BD82A860004E1BC /* ProgressHeaderView.swift */; };
 		C8FCFA042BD7C0B30018BB63 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8FCFA032BD7C0B30018BB63 /* AppDelegate.swift */; };
 		C8FCFA062BD7C0B30018BB63 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8FCFA052BD7C0B30018BB63 /* SceneDelegate.swift */; };
 		C8FCFA082BD7C0B30018BB63 /* ReminderListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8FCFA072BD7C0B30018BB63 /* ReminderListViewController.swift */; };
@@ -42,6 +46,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		C82942E02BD821BB0004E1BC /* ReminderStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReminderStore.swift; sourceTree = "<group>"; };
+		C82942E22BD821CE0004E1BC /* TodayError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayError.swift; sourceTree = "<group>"; };
+		C82942E42BD822130004E1BC /* ReminderListStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReminderListStyle.swift; sourceTree = "<group>"; };
+		C82942E82BD82A860004E1BC /* ProgressHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressHeaderView.swift; sourceTree = "<group>"; };
 		C8FCFA002BD7C0B30018BB63 /* Today.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Today.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C8FCFA032BD7C0B30018BB63 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		C8FCFA052BD7C0B30018BB63 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -171,6 +179,8 @@
 			children = (
 				C8FCFA392BD7CCFE0018BB63 /* Remidner.swift */,
 				C8FCFA482BD7D31E0018BB63 /* Date+Today.swift */,
+				C82942E02BD821BB0004E1BC /* ReminderStore.swift */,
+				C82942E22BD821CE0004E1BC /* TodayError.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -179,6 +189,8 @@
 			isa = PBXGroup;
 			children = (
 				C8FCFA402BD7CD970018BB63 /* UITableViewCell */,
+				C82942E42BD822130004E1BC /* ReminderListStyle.swift */,
+				C82942E82BD82A860004E1BC /* ProgressHeaderView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -348,14 +360,18 @@
 			buildActionMask = 2147483647;
 			files = (
 				C8FCFA422BD7CE030018BB63 /* ReminderCreationCell.swift in Sources */,
+				C82942E52BD822130004E1BC /* ReminderListStyle.swift in Sources */,
 				C8FCFA492BD7D31E0018BB63 /* Date+Today.swift in Sources */,
 				C8FCFA082BD7C0B30018BB63 /* ReminderListViewController.swift in Sources */,
 				C8FCFA3A2BD7CCFE0018BB63 /* Remidner.swift in Sources */,
 				C8FCFA042BD7C0B30018BB63 /* AppDelegate.swift in Sources */,
 				C8FCFA452BD7D2730018BB63 /* UIFont.swift in Sources */,
+				C82942E32BD821CE0004E1BC /* TodayError.swift in Sources */,
+				C82942E92BD82A860004E1BC /* ProgressHeaderView.swift in Sources */,
 				C8FCFA062BD7C0B30018BB63 /* SceneDelegate.swift in Sources */,
 				C8FCFA362BD7C15E0018BB63 /* qw.swift in Sources */,
 				C8FCFA472BD7D2F90018BB63 /* UIView.swift in Sources */,
+				C82942E12BD821BB0004E1BC /* ReminderStore.swift in Sources */,
 				C8FCFA3F2BD7CD8D0018BB63 /* ReminderItemListCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
