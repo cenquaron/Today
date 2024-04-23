@@ -1,11 +1,15 @@
 import UIKit
 
+protocol ReminderItemListCellDelegate: AnyObject {
+    func didTapDoneButton(for reminder: Reminder)
+}
+
 class ReminderItemListCell: UITableViewCell {
     
     //MARK: - Variables
     static let indetifier = "ReminderItemListCell"
+    weak var delegate: ReminderItemListCellDelegate?
     private var reminder: Reminder!
-    var buttonAction: (() -> Void)?
     
     //MARK: - UI Components
     private lazy var doneButton = completeButton()
@@ -35,12 +39,13 @@ class ReminderItemListCell: UITableViewCell {
     
     //MARK: - Selectors
     @objc func didTapCompleteButton() {
-        doneButton.isSelected = !doneButton.isSelected
-        reminder.isComplete = doneButton.isSelected
+        reminder.isComplete.toggle()
         
-        buttonAction?()
         updateButton()
+        
         print("\(reminder.isComplete)")
+        
+        delegate?.didTapDoneButton(for: reminder)
     }
     
     func updateButton() {
@@ -73,7 +78,7 @@ extension ReminderItemListCell {
         contentView.addSubview(infoStackView)
         infoStackView.addArrangedSubview(titleLabel)
         infoStackView.addArrangedSubview(dateLabel)
-        dateLabel.font = .footnote
+        dateLabel.font = .body2
         
         NSLayoutConstraint.activate([
             infoStackView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 5),
@@ -117,7 +122,7 @@ extension ReminderItemListCell {
     private static func mainInfoStackView() -> UIStackView {
         let view = UIStackView()
         view.translatesAutoresizingMaskIntoConstraints = false
-        view.spacing = 5
+        view.spacing = 4
         view.axis = .vertical
         view.distribution = .fill
         return view

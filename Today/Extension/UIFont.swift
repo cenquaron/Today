@@ -7,4 +7,5 @@ extension UIFont {
     static let body = UIFont.systemFont(ofSize: 17)
     static let subhead = UIFont.systemFont(ofSize: 15)
     static let footnote = UIFont.boldSystemFont(ofSize: 13)
+    static let body2 = UIFont.systemFont(ofSize: 13)
 }

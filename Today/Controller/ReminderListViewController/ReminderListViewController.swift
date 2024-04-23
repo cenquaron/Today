@@ -39,7 +39,6 @@ class ReminderListViewController: UIViewController {
     //MARK: - LifeCycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .systemBackground
         
         setupSegmentListControl()
         setupTableView()
@@ -49,6 +48,7 @@ class ReminderListViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         tableView.reloadData()
+        refreshBackground()
     }
     
     init(reminderItem: [Reminder]) {
@@ -75,18 +75,27 @@ class ReminderListViewController: UIViewController {
         tableView.delegate = self
         tableView.dataSource = self
         tableView.tableHeaderView = headerView
-        setupTableViewAndProgressHeaderViewConstrain()
+        setupUI()
         updateProgressHeader()
     }
     
     @objc func didChangeListStyle(_ segment: UISegmentedControl) {
         listStyle = ReminderListStyle(rawValue: segment.selectedSegmentIndex) ?? .today
         tableView.reloadData()
+        refreshBackground()
         updateProgressHeader()
     }
     
     private func updateProgressHeader() {
         headerView.progress = progress
+    }
+    
+    private func refreshBackground() {
+        tableView.backgroundView = nil
+        let backgroundView = UIView()
+        let gradientLayer = CAGradientLayer.gradientLayer(for: listStyle, in: view.frame)
+        backgroundView.layer.addSublayer(gradientLayer)
+        tableView.backgroundView = backgroundView
     }
 }
 
@@ -102,9 +111,7 @@ extension ReminderListViewController: UITableViewDataSource, UITableViewDelegate
         ReminderItemListCell
         let item = filterReminder[indexPath.row]
         cell.configure(with: item)
-        //        cell.buttonAction = {
-        //            print("\(item.isComplete)")
-        //        }
+        cell.delegate = self
         cell.selectionStyle = .none
         
         return cell
@@ -119,19 +126,19 @@ extension ReminderListViewController: UITableViewDataSource, UITableViewDelegate
 
 //MARK: - Setup UITableView
 extension ReminderListViewController {
-    private func setupTableViewAndProgressHeaderViewConstrain() {
+    private func setupUI() {
         setupHeaderview()
         setupUITableViewConstrain()
     }
     
     private func setupHeaderview() {
-        view.addSubview(headerView)
         headerView.translatesAutoresizingMaskIntoConstraints = false
         headerView.backgroundColor = .clear
         
         NSLayoutConstraint.activate([
-            headerView.widthAnchor.constraint(equalToConstant: 400),
-            headerView.heightAnchor.constraint(equalToConstant: 400)
+            headerView.centerXAnchor.constraint(equalTo: tableView.centerXAnchor),
+            headerView.heightAnchor.constraint(equalToConstant: 400),
+            headerView.widthAnchor.constraint(equalToConstant: 400)
         ])
     }
     
@@ -139,10 +146,21 @@ extension ReminderListViewController {
         view.addSubview(tableView)
         
         NSLayoutConstraint.activate([
-            tableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
-            tableView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 16),
-            tableView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -16),
+            tableView.topAnchor.constraint(equalTo: view.topAnchor),
+            tableView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
+            tableView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
             tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
         ])
+    }
+}
+
+
+extension ReminderListViewController: ReminderItemListCellDelegate {
+    func didTapDoneButton(for reminder: Reminder) {
+        if let index = reminderItem.firstIndex(where: { $0.id == reminder.id }) {
+            reminderItem[index] = reminder
+            tableView.reloadRows(at: [IndexPath(row: index, section: 0)], with: .automatic)
+            updateProgressHeader()
+        }
     }
 }
