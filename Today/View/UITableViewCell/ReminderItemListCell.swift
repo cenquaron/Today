@@ -40,11 +40,7 @@ class ReminderItemListCell: UITableViewCell {
     //MARK: - Selectors
     @objc func didTapCompleteButton() {
         reminder.isComplete.toggle()
-        
         updateButton()
-        
-        print("\(reminder.isComplete)")
-        
         delegate?.didTapDoneButton(for: reminder)
     }
     
@@ -52,8 +48,8 @@ class ReminderItemListCell: UITableViewCell {
         let imageName = reminder!.isComplete ? "checked" : "unchecked"
         doneButton.setImage(UIImage(named: imageName), for: .normal)
     }
-
 }
+
 
 //MARK: -  Setup Constrain
 extension ReminderItemListCell {

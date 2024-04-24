@@ -16,7 +16,7 @@ class ReminderListViewController: UIViewController {
     ])
     
     //MARK: - UI Components
-    private lazy var tableView: UITableView = {
+    lazy var tableView: UITableView = {
         let view = UITableView(frame: .zero, style: .grouped)
         view.translatesAutoresizingMaskIntoConstraints = false
         view.register(ReminderItemListCell.self, forCellReuseIdentifier: ReminderItemListCell.indetifier)
@@ -39,15 +39,15 @@ class ReminderListViewController: UIViewController {
     //MARK: - LifeCycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        tableView.reloadData()
         setupSegmentListControl()
         setupTableView()
         updateProgressHeader()
+        prepareReminderStore()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        tableView.reloadData()
         refreshBackground()
     }
     
@@ -79,23 +79,86 @@ class ReminderListViewController: UIViewController {
         updateProgressHeader()
     }
     
-    @objc func didChangeListStyle(_ segment: UISegmentedControl) {
-        listStyle = ReminderListStyle(rawValue: segment.selectedSegmentIndex) ?? .today
-        tableView.reloadData()
-        refreshBackground()
-        updateProgressHeader()
-    }
     
-    private func updateProgressHeader() {
+    func updateProgressHeader() {
         headerView.progress = progress
     }
     
-    private func refreshBackground() {
+    private func prepareReminderStore() {
+        Task {
+            do {
+                try await reminderStore.requestAccess()
+                reminderItem = try await reminderStore.readAll()
+                NotificationCenter.default.addObserver(self, selector: #selector(eventStoreChanged), name: .EKEventStoreChanged, object: nil)
+            } catch TodayError.accessDenied, TodayError.accessRestricted {
+            } catch {
+                showError(error)
+            }
+            updateProgressHeader()
+        }
+    }
+    
+    func reminderStoreChanged() {
+        Task {
+            reminderItem = try await reminderStore.readAll()
+        }
+    }
+    
+    func updateReminder(_ reminder: Reminder) {
+        let index = reminderItem.indexOfReminder(withId: reminder.id)
+        reminderItem[index] = reminder
+        do {
+            try reminderStore.save(reminder)
+        } catch {
+            showError(error)
+        }
+    }
+    
+    
+    func reminder(withId id: Reminder.ID) -> Reminder {
+        let index = reminderItem.indexOfReminder(withId: id)
+        return reminderItem[index]
+    }
+    
+    func completeReminder(withId id: Reminder.ID) {
+        var reminder = reminder(withId: id)
+        reminder.isComplete.toggle()
+        updateReminder(reminder)
+    }
+    
+    func addReminder(_ reminder: Reminder) {
+        var reminder = reminder
+        do {
+            let idFromStore = try reminderStore.save(reminder)
+            reminder.id = idFromStore
+            reminderItem.append(reminder)
+        } catch TodayError.accessDenied {
+        } catch {
+            showError(error)
+        }
+    }
+    
+    func refreshBackground() {
         tableView.backgroundView = nil
         let backgroundView = UIView()
         let gradientLayer = CAGradientLayer.gradientLayer(for: listStyle, in: view.frame)
         backgroundView.layer.addSublayer(gradientLayer)
         tableView.backgroundView = backgroundView
+    }
+    
+    
+    private func showError(_ error: Error) {
+        let alertTitle = NSLocalizedString("Error", comment: "Error alert title")
+        let alert = UIAlertController(
+            title: alertTitle, message: error.localizedDescription, preferredStyle: .alert)
+        let actionTitle = NSLocalizedString("OK", comment: "Alert OK button title")
+        alert.addAction(
+            UIAlertAction(
+                title: actionTitle, style: .default,
+                handler: { [weak self] _ in
+                    self?.dismiss(animated: true)
+                }))
+        present(alert, animated: true, completion: nil)
     }
 }
 
@@ -115,6 +178,47 @@ extension ReminderListViewController: UITableViewDataSource, UITableViewDelegate
         cell.selectionStyle = .none
         
         return cell
+    }
+    
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        UIView.animate(withDuration: 0.17) {
+            guard let selectedCell = tableView.cellForRow(at: indexPath) else {
+                fatalError("Error appearing while selecting cell. Check UITableView conformance - didSelectRowAt.")
+            }
+            selectedCell.transform = CGAffineTransform(scaleX: 1.033, y: 1.033)
+        } completion: { [self] _ in
+            UIView.animate(withDuration: 0.17) {
+                guard let selectedCell = tableView.cellForRow(at: indexPath) else {
+                    fatalError("Error appearing while selecting cell. Check UITableView conformance - didSelectRowAt.")
+                }
+                selectedCell.transform = .identity
+                tableView.deselectRow(at: indexPath, animated: true)
+            }
+            let selectedReminder = reminderItem[indexPath.row]
+            let controller = ReminderViewController(reminder: selectedReminder)
+            let openController = UINavigationController(rootViewController: controller)
+            self.present(openController, animated: true)
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
+            let deletedReminder = filterReminder[indexPath.row]
+            if let indexInReminders = reminderItem.firstIndex(of: deletedReminder) {
+                reminderItem.remove(at: indexInReminders)
+                tableView.deleteRows(at: [indexPath], with: .fade)
+                updateProgressHeader()
+                
+                //rm in Reminder
+                do {
+                    let reminderId = deletedReminder.id
+                    try reminderStore.remove(with: reminderId)
+                } catch {
+                    showError(error)
+                }
+            }
+        }
     }
     
     
@@ -154,13 +258,14 @@ extension ReminderListViewController {
     }
 }
 
-
+//MARK: - Used Protocol
 extension ReminderListViewController: ReminderItemListCellDelegate {
     func didTapDoneButton(for reminder: Reminder) {
         if let index = reminderItem.firstIndex(where: { $0.id == reminder.id }) {
             reminderItem[index] = reminder
             tableView.reloadRows(at: [IndexPath(row: index, section: 0)], with: .automatic)
             updateProgressHeader()
+            updateReminder(reminder)
         }
     }
 }
