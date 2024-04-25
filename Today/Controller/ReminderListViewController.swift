@@ -19,7 +19,8 @@ class ReminderListViewController: UIViewController {
     lazy var tableView: UITableView = {
         let view = UITableView(frame: .zero, style: .grouped)
         view.translatesAutoresizingMaskIntoConstraints = false
-        view.register(ReminderItemListCell.self, forCellReuseIdentifier: ReminderItemListCell.indetifier)
+        view.register(ReminderItemListCell.self, forCellReuseIdentifier: ReminderItemListCell.identifier)
+        view.register(ReminderCreationCell.self, forCellReuseIdentifier: ReminderCreationCell.identifier)
         view.backgroundColor = .clear
         view.estimatedRowHeight = 98
         view.separatorInset = UIEdgeInsets(top: 0.0, left: 52, bottom: 0.0, right: 0)
@@ -180,24 +181,39 @@ class ReminderListViewController: UIViewController {
                 }))
         present(alert, animated: true, completion: nil)
     }
+    
+    @objc func didChangeListStyle(_ segment: UISegmentedControl) {
+        listStyle = ReminderListStyle(rawValue: segment.selectedSegmentIndex) ?? .today
+        tableView.reloadData()
+        refreshBackground()
+        updateProgressHeader()
+    }
+    
+    @objc func eventStoreChanged(_ notification: NSNotification) {
+        reminderStoreChanged()
+    }
 }
 
 
 //MARK: - Setup UITableViewDataSource UITableViewDelegate
 extension ReminderListViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return filterReminder.count
+        return filterReminder.count + 1
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: ReminderItemListCell.indetifier, for: indexPath) as!
-        ReminderItemListCell
-        let item = filterReminder[indexPath.row]
-        cell.configure(with: item)
-        cell.delegate = self
-        cell.selectionStyle = .none
-        
-        return cell
+        if indexPath.row == filterReminder.count {
+            let cell = tableView.dequeueReusableCell(withIdentifier: ReminderCreationCell.identifier, for: indexPath) as! ReminderCreationCell
+            return cell
+        } else {
+            let cell = tableView.dequeueReusableCell(withIdentifier: ReminderItemListCell.identifier, for: indexPath) as! ReminderItemListCell
+            let item = filterReminder[indexPath.row]
+            cell.configure(with: item)
+            cell.delegate = self
+            cell.selectionStyle = .none
+            
+            return cell
+        }
     }
     
     
@@ -215,14 +231,30 @@ extension ReminderListViewController: UITableViewDataSource, UITableViewDelegate
                 selectedCell.transform = .identity
                 tableView.deselectRow(at: indexPath, animated: true)
             }
-            let selectedReminder = reminderItem[indexPath.row]
-            let controller = ReminderViewController(reminder: selectedReminder)
-            let openController = UINavigationController(rootViewController: controller)
-            self.present(openController, animated: true)
+            
+            if indexPath.row == filterReminder.count {
+                //MARK: - //Need Open EditorViewController
+               /* let selectedReminder = filterReminder[indexPath.row]
+                let controller = EditorViewController(reminder: selectedReminder)
+                controller.delegate = self
+                let openController = UINavigationController(rootViewController: controller)
+                self.present(openController, animated: true)
+                */
+            } else {
+                let selectedReminder = reminderItem[indexPath.row]
+                let controller = ReminderViewController(reminder: selectedReminder)
+                let openController = UINavigationController(rootViewController: controller)
+                self.present(openController, animated: true)
+            }
         }
     }
+
     
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if indexPath.row == filterReminder.count {
+            return
+        }
+        
         if editingStyle == .delete {
             let deletedReminder = filterReminder[indexPath.row]
             if let indexInReminders = reminderItem.firstIndex(of: deletedReminder) {
@@ -238,6 +270,14 @@ extension ReminderListViewController: UITableViewDataSource, UITableViewDelegate
                     showError(error)
                 }
             }
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCell.EditingStyle {
+        if indexPath.row == filterReminder.count {
+            return .none
+        } else {
+            return .delete
         }
     }
     
@@ -321,6 +361,7 @@ extension ReminderListViewController {
         ])
     }
 }
+
 
 //MARK: - Used Protocol
 extension ReminderListViewController: ReminderItemListCellDelegate {

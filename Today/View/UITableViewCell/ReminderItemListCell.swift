@@ -3,7 +3,7 @@ import UIKit
 class ReminderItemListCell: UITableViewCell {
     
     //MARK: - Variables
-    static let indetifier = "ReminderItemListCell"
+    static let identifier = "ReminderItemListCell"
     weak var delegate: ReminderItemListCellDelegate?
     private var reminder: Reminder!
     
