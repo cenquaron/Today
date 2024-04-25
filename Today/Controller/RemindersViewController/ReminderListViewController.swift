@@ -217,7 +217,6 @@ extension ReminderListViewController: UITableViewDataSource, UITableViewDelegate
             }
             let selectedReminder = reminderItem[indexPath.row]
             let controller = ReminderViewController(reminder: selectedReminder)
-            controller.delegate = self
             let openController = UINavigationController(rootViewController: controller)
             self.present(openController, animated: true)
         }

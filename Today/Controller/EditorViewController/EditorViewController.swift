@@ -64,11 +64,11 @@ class EditorViewController: UIViewController {
     }
     
     @objc func saveButtonTap(_ sender: UIBarButtonItem) {
-        notes = notesField.text
-        
         reminder.title = titleField.text ?? ""
-        reminder.notes = notes
+        reminder.notes = notesField.text ?? ""
         reminder.dueDate = datePicker.date
+        reminder.dueDate = timerPicker.date
+
         
         do {
             let eventStore = ReminderStore()
