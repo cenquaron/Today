@@ -1,7 +1,9 @@
 import UIKit
 
 class EditorViewController: UIViewController {
+    
     //MARK: - Variables
+    weak var delegate: ReminderUpdateDelegate?
     private var notes: String?
     var reminder: Reminder
     
@@ -38,8 +40,6 @@ class EditorViewController: UIViewController {
         update()
         
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .save, target: self, action: #selector(saveButtonTap))
-        navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(doneButtonTap))
-        navigationController?.navigationBar.tintColor = .todayDetailCellTint
         
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(_:)), name: UIResponder.keyboardWillShowNotification, object: nil)
     }
@@ -73,15 +73,11 @@ class EditorViewController: UIViewController {
         do {
             let eventStore = ReminderStore()
             try eventStore.save(reminder)
-            self.navigationController?.popViewController(animated: true)
+            delegate?.didUpdateReminder(reminder)
+            self.dismiss(animated: true)
         } catch {
             print("failed save \(error)")
         }
-        
-    }
-    
-    @objc func doneButtonTap(_ sender: UIBarButtonItem) {
-        self.dismiss(animated: true)
     }
 }
 

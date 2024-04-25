@@ -1,9 +1,5 @@
 import UIKit
 
-protocol ReminderItemListCellDelegate: AnyObject {
-    func didTapDoneButton(for reminder: Reminder)
-}
-
 class ReminderItemListCell: UITableViewCell {
     
     //MARK: - Variables

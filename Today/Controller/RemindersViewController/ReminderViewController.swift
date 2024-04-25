@@ -3,6 +3,7 @@ import UIKit
 class ReminderViewController: UIViewController {
     
     //MARK: - Variable
+    weak var delegate: ReminderUpdateDelegate?
     private var picSquareHeightConstraint: NSLayoutConstraint?
     private var reminder: Reminder
     
@@ -47,6 +48,7 @@ class ReminderViewController: UIViewController {
     //MARK: - Selectors
     @objc private func didTapEditButton() {
         let pushEditViewController = EditorViewController(reminder: reminder)
+        pushEditViewController.delegate = self
         self.navigationController?.pushViewController(pushEditViewController, animated: true)
     }
     
@@ -201,3 +203,11 @@ extension ReminderViewController {
     }
 }
 
+
+//MARK: - Used Protocol
+extension ReminderViewController: ReminderUpdateDelegate {
+    func didUpdateReminder(_ reminder: Reminder) {
+        self.reminder = reminder
+        update()
+    }
+}

@@ -23,7 +23,8 @@ class ProgressHeaderView: UIView {
     //MARK: - LifeCycle
     override init(frame: CGRect) {
         super.init(frame: frame)
-        setupConstrainView()
+        backgroundColor = .clear
+        setupLayout()
     }
     
     required init?(coder: NSCoder) {
@@ -39,52 +40,53 @@ class ProgressHeaderView: UIView {
 }
 
 
-//MARK: - Make UI
+//MARK: - Setup Constrain
 extension ProgressHeaderView {
-    private func setupConstrainView() {
-        containerView.addSubview(upperView)
-        containerView.addSubview(lowerView)
-        addSubview(containerView)
-        
-        upperView.translatesAutoresizingMaskIntoConstraints = false
-        lowerView.translatesAutoresizingMaskIntoConstraints = false
-        containerView.translatesAutoresizingMaskIntoConstraints = false
-        
-        
-        heightAnchor.constraint(equalTo: widthAnchor, multiplier: 1).isActive = true
-        containerView.heightAnchor.constraint(equalTo: containerView.widthAnchor, multiplier: 1)
-            .isActive = true
-        
-        
-        containerView.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
-        containerView.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
-        
-        
-        containerView.widthAnchor.constraint(equalTo: widthAnchor, multiplier: 0.85).isActive = true
-        
-        
-        upperView.topAnchor.constraint(equalTo: topAnchor).isActive = true
-        upperView.bottomAnchor.constraint(equalTo: lowerView.topAnchor).isActive = true
-        lowerView.bottomAnchor.constraint(equalTo: bottomAnchor).isActive = true
-        
-        
-        upperView.leadingAnchor.constraint(equalTo: leadingAnchor).isActive = true
-        upperView.trailingAnchor.constraint(equalTo: trailingAnchor).isActive = true
-        lowerView.leadingAnchor.constraint(equalTo: leadingAnchor).isActive = true
-        lowerView.trailingAnchor.constraint(equalTo: trailingAnchor).isActive = true
-        
+    private func setupLayout() {
         heightConstraint = lowerView.heightAnchor.constraint(equalToConstant: 0)
         heightConstraint?.isActive = true
         
-        
-        backgroundColor = .clear
+        setupContainerView()
+        setupLowerAndUpperPosition()
+    }
+    
+    private func setupContainerView() {
+        addSubview(containerView)
+        containerView.translatesAutoresizingMaskIntoConstraints = false
         containerView.backgroundColor = .clear
+        
+        NSLayoutConstraint.activate([
+            containerView.centerXAnchor.constraint(equalTo: centerXAnchor),
+            containerView.centerYAnchor.constraint(equalTo: centerYAnchor),
+            containerView.heightAnchor.constraint(equalTo: containerView.widthAnchor, multiplier: 1),
+            containerView.widthAnchor.constraint(equalTo: widthAnchor, multiplier: 0.85)
+        ])
+    }
+    
+    private func setupLowerAndUpperPosition() {
+        containerView.addSubview(upperView)
+        containerView.addSubview(lowerView)
+        upperView.translatesAutoresizingMaskIntoConstraints = false
+        lowerView.translatesAutoresizingMaskIntoConstraints = false
         upperView.backgroundColor = .todayProgressUpperBackground
         lowerView.backgroundColor = .todayProgressLowerBackground
+
+
+        NSLayoutConstraint.activate([
+            upperView.topAnchor.constraint(equalTo: topAnchor),
+            upperView.bottomAnchor.constraint(equalTo: lowerView.topAnchor),
+            lowerView.bottomAnchor.constraint(equalTo: bottomAnchor),
+            
+            upperView.leadingAnchor.constraint(equalTo: leadingAnchor),
+            upperView.trailingAnchor.constraint(equalTo: trailingAnchor),
+            lowerView.leadingAnchor.constraint(equalTo: leadingAnchor),
+            lowerView.trailingAnchor.constraint(equalTo: trailingAnchor)
+        ])
     }
 }
 
 
+//MARK: - Make UI
 extension ProgressHeaderView {
     private static func takedView() -> UIView {
         let view = UIView(frame: .zero)
