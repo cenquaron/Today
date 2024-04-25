@@ -88,8 +88,8 @@ class ReminderListViewController: UIViewController {
                 try await reminderStore.requestAccess()
                 reminderItem = try await reminderStore.readAll()
                 NotificationCenter.default.addObserver(self, selector: #selector(eventStoreChanged), name: .EKEventStoreChanged, object: nil)
-                updateProgressHeader() // Обновляем заголовок после загрузки данных
-                tableView.reloadData() // Обновляем таблицу сразу после загрузки данных
+                updateProgressHeader()
+                tableView.reloadData()
             } catch TodayError.accessDenied, TodayError.accessRestricted {
             } catch {
                 showError(error)
@@ -130,7 +130,6 @@ class ReminderListViewController: UIViewController {
             showError(error)
         }
     }
-    
     
     func reminder(withId id: Reminder.ID) -> Reminder {
         let index = reminderItem.indexOfReminder(withId: id)
@@ -192,6 +191,13 @@ class ReminderListViewController: UIViewController {
     @objc func eventStoreChanged(_ notification: NSNotification) {
         reminderStoreChanged()
     }
+    
+    @objc func creareButtonDidTapped() {
+//        let controller = EditorViewController(reminder: )
+//        controller.delegate = self
+//        let openController = UINavigationController(rootViewController: controller)
+//        self.present(openController, animated: true)
+    }
 }
 
 
@@ -234,21 +240,24 @@ extension ReminderListViewController: UITableViewDataSource, UITableViewDelegate
             
             if indexPath.row == filterReminder.count {
                 //MARK: - //Need Open EditorViewController
-               /* let selectedReminder = filterReminder[indexPath.row]
-                let controller = EditorViewController(reminder: selectedReminder)
-                controller.delegate = self
-                let openController = UINavigationController(rootViewController: controller)
-                self.present(openController, animated: true)
-                */
+                //                let controller = EditorViewController(reminder: self)
+                //                controller.delegate = self
+                //                let openController = UINavigationController(rootViewController: controller)
+                //                self.present(openController, animated: true)
+                
             } else {
-                let selectedReminder = reminderItem[indexPath.row]
-                let controller = ReminderViewController(reminder: selectedReminder)
+                let selectedReminder = filterReminder[indexPath.row]
+                guard let indexInReminders = reminderItem.firstIndex(where: { $0.id == selectedReminder.id }) else {
+                    fatalError("Failed to find index of selected reminder in reminderItem.")
+                }
+                let controller = ReminderViewController(reminder: reminderItem[indexInReminders])
                 let openController = UINavigationController(rootViewController: controller)
                 self.present(openController, animated: true)
             }
         }
     }
 
+    
     
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if indexPath.row == filterReminder.count {
@@ -362,6 +371,21 @@ extension ReminderListViewController {
     }
 }
 
+
+//MARK: - Make UI
+extension ReminderListViewController {
+    private func creareButton() -> UIButton {
+        let btn = UIButton(type: .custom)
+        btn.translatesAutoresizingMaskIntoConstraints = false
+        btn.setImage(UIImage(named: "createButton"), for: .normal)
+        btn.layer.cornerRadius = 0.5 * 44
+        btn.layer.shadowColor = UIColor(red: 0/255, green: 49/255, blue: 102/255, alpha: 0.30).cgColor
+        btn.layer.shadowOffset = CGSize(width: 0, height: 5)
+        btn.layer.shadowOpacity = 0.5
+        btn.addTarget(self, action: #selector(creareButtonDidTapped), for: .touchUpInside)
+        return btn
+    }
+}
 
 //MARK: - Used Protocol
 extension ReminderListViewController: ReminderItemListCellDelegate {
