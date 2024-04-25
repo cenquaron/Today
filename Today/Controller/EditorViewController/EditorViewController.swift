@@ -66,9 +66,27 @@ class EditorViewController: UIViewController {
     @objc func saveButtonTap(_ sender: UIBarButtonItem) {
         reminder.title = titleField.text ?? ""
         reminder.notes = notesField.text ?? ""
-        reminder.dueDate = datePicker.date
-        reminder.dueDate = timerPicker.date
-
+        
+        let selectedDate = datePicker.date
+        let selectedTime = timerPicker.date
+        
+        let calendar = Calendar.current
+        let year = calendar.component(.year, from: selectedDate)
+        let month = calendar.component(.month, from: selectedDate)
+        let day = calendar.component(.day, from: selectedDate)
+        let hour = calendar.component(.hour, from: selectedTime)
+        let minute = calendar.component(.minute, from: selectedTime)
+        
+        var dateComponents = DateComponents()
+        dateComponents.year = year
+        dateComponents.month = month
+        dateComponents.day = day
+        dateComponents.hour = hour
+        dateComponents.minute = minute
+        
+        let combinedDate = calendar.date(from: dateComponents)
+        
+        reminder.dueDate = combinedDate ?? Date()
         
         do {
             let eventStore = ReminderStore()
