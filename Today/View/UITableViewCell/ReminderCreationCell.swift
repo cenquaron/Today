@@ -24,23 +24,13 @@ class ReminderCreationCell: UITableViewCell {
 //MARK: -  Setup Constrain
 extension ReminderCreationCell {
     private func setupLayoutView() {
-        setupIconImageView()
-        setupTitleLabel()
-    }
-    
-    private func setupIconImageView() {
         addSubview(iconImage)
-        
-        NSLayoutConstraint.activate([
-            iconImage.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
-            iconImage.centerYAnchor.constraint(equalTo: centerYAnchor)
-        ])
-    }
-    
-    private func setupTitleLabel() {
         addSubview(titleTextLabel)
         
         NSLayoutConstraint.activate([
+            iconImage.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
+            iconImage.centerYAnchor.constraint(equalTo: centerYAnchor),
+            
             titleTextLabel.topAnchor.constraint(equalTo: topAnchor, constant: 16),
             titleTextLabel.leadingAnchor.constraint(equalTo: iconImage.trailingAnchor, constant: 12),
             titleTextLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
@@ -55,13 +45,14 @@ extension ReminderCreationCell {
 extension ReminderCreationCell {
     private func iconImageView() -> UIImageView {
         let view = UIImageView()
-        var image = UIImage(named: "plus.circle.fill")?.withRenderingMode(.alwaysOriginal) ?? UIImage()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        var image = UIImage(systemName: "plus.circle.fill")?.withRenderingMode(.alwaysOriginal) ?? UIImage()
         image = image.withTintColor(.backPrimary)
         
         view.image = image
-        view.translatesAutoresizingMaskIntoConstraints = false
         view.widthAnchor.constraint(equalToConstant: 12).isActive = true
         view.heightAnchor.constraint(equalToConstant: 12).isActive = true
+
         return view
     }
     

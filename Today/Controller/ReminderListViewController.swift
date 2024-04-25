@@ -35,6 +35,7 @@ class ReminderListViewController: UIViewController {
         listStyleSegmentControl.addTarget(self, action: #selector(didChangeListStyle), for: .valueChanged)
         navigationItem.titleView = listStyleSegmentControl
     }
+    private lazy var createButton = creareButton()
     
     
     //MARK: - LifeCycle
@@ -145,7 +146,6 @@ class ReminderListViewController: UIViewController {
         }
     }
     
-    
     func addReminder(_ reminder: Reminder) {
         var reminder = reminder
         do {
@@ -193,6 +193,7 @@ class ReminderListViewController: UIViewController {
     }
     
     @objc func creareButtonDidTapped() {
+        print("creareButtonDidTapped")
 //        let controller = EditorViewController(reminder: )
 //        controller.delegate = self
 //        let openController = UINavigationController(rootViewController: controller)
@@ -240,6 +241,7 @@ extension ReminderListViewController: UITableViewDataSource, UITableViewDelegate
             
             if indexPath.row == filterReminder.count {
                 //MARK: - //Need Open EditorViewController
+                print("Need Open EditorViewController")
                 //                let controller = EditorViewController(reminder: self)
                 //                controller.delegate = self
                 //                let openController = UINavigationController(rootViewController: controller)
@@ -256,7 +258,27 @@ extension ReminderListViewController: UITableViewDataSource, UITableViewDelegate
             }
         }
     }
+    
+    
+    func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        if indexPath.row == filterReminder.count {
+            return nil
+        }
 
+        let action = UIContextualAction(style: .normal, title: nil) { [weak self] (_, _, completion) in
+            guard let guest = self else { return }
+
+            let selectedReminder = guest.filterReminder[indexPath.row]
+            guest.completeReminder(withId: selectedReminder.id)
+
+            completion(true)
+        }
+
+        action.image = UIImage(systemName: "checkmark.circle.fill")
+        action.backgroundColor = .systemGreen
+
+        return UISwipeActionsConfiguration(actions: [action])
+    } 
     
     
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
@@ -282,6 +304,39 @@ extension ReminderListViewController: UITableViewDataSource, UITableViewDelegate
         }
     }
     
+    
+    func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        if indexPath.row == reminderItem.count {
+            return nil
+        }
+
+        let action = UIContextualAction(style: .destructive, title: nil) { [weak self] (_, _, completion) in
+            guard let guest = self else { return }
+            
+            let deletedReminder = guest.filterReminder[indexPath.row]
+            if let indexInReminders = guest.reminderItem.firstIndex(of: deletedReminder) {
+                guest.reminderItem.remove(at: indexInReminders)
+                tableView.deleteRows(at: [indexPath], with: .fade)
+                guest.updateProgressHeader()
+                
+                // Remove from Reminder Store
+                do {
+                    let reminderId = deletedReminder.id
+                    try guest.reminderStore.remove(with: reminderId)
+                } catch {
+                    guest.showError(error)
+                }
+            }
+        }
+
+        action.image = UIImage(systemName: "trash.fill")
+        action.backgroundColor = .systemRed
+
+        return UISwipeActionsConfiguration(actions: [action])
+    }
+
+    
+    
     func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCell.EditingStyle {
         if indexPath.row == filterReminder.count {
             return .none
@@ -289,6 +344,7 @@ extension ReminderListViewController: UITableViewDataSource, UITableViewDelegate
             return .delete
         }
     }
+    
     
     func tableView(_ tableView: UITableView, contextMenuConfigurationForRowAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration? {
         let configuration = UIContextMenuConfiguration(identifier: nil, previewProvider: nil) { _ -> UIMenu? in
@@ -346,6 +402,7 @@ extension ReminderListViewController {
     private func setupUI() {
         setupHeaderview()
         setupUITableViewConstrain()
+        setupCreateButton()
     }
     
     private func setupHeaderview() {
@@ -367,6 +424,17 @@ extension ReminderListViewController {
             tableView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
             tableView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
             tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+        ])
+    }
+    
+    private func setupCreateButton() {
+        view.addSubview(createButton)
+        
+        NSLayoutConstraint.activate([
+            createButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -20),
+            createButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            createButton.widthAnchor.constraint(equalToConstant: 44),
+            createButton.heightAnchor.constraint(equalToConstant: 44)
         ])
     }
 }
