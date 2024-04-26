@@ -94,7 +94,7 @@ extension ReminderViewController {
     
     private func setupContentSquare() {
         scrollView.addSubview(contentView)
-        
+
         picSquareHeightConstraint?.isActive = true
         
         NSLayoutConstraint.activate([
@@ -148,13 +148,15 @@ extension ReminderViewController {
         let descriptionSize = descriptionLabel.sizeThatFits(CGSize(width: contentView.bounds.width - 40, height: .greatestFiniteMagnitude))
         
         NSLayoutConstraint.activate([
-            descriptionLabel.topAnchor.constraint(equalTo: dateTimeLabel.bottomAnchor, constant: 20),
-            descriptionLabel.leadingAnchor.constraint(equalTo: descriptionImage.leadingAnchor, constant: 40),
-            descriptionLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -30),
-            descriptionLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -20),
+
             
-            descriptionImage.centerYAnchor.constraint(equalTo: descriptionLabel.centerYAnchor, constant: 1),
-            descriptionImage.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20)
+//            descriptionLabel.topAnchor.constraint(equalTo: dateTimeLabel.bottomAnchor, constant: 15),
+//            descriptionLabel.leadingAnchor.constraint(equalTo: descriptionImage.leadingAnchor, constant: 40),
+//            descriptionLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -30),
+//            descriptionLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -20),
+//            
+//            descriptionImage.centerYAnchor.constraint(equalTo: descriptionLabel.centerYAnchor, constant: 7),
+//            descriptionImage.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20)
         ])
         
         let picSquareHeight = descriptionSize.height + 170
@@ -171,7 +173,7 @@ extension ReminderViewController {
         view.translatesAutoresizingMaskIntoConstraints = false
         view.showsVerticalScrollIndicator = true
         view.alwaysBounceVertical = true
-        view.backgroundColor = .backPrimary
+        view.backgroundColor = .todayNavigationBackground
         return view
     }
     
@@ -194,7 +196,7 @@ extension ReminderViewController {
     private static func contentView() -> UIView {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
-        view.backgroundColor = .systemBackground
+        view.backgroundColor = .todayListCellBackground
         view.widthAnchor.constraint(equalToConstant: 370).isActive = true
         view.layer.cornerRadius = 10
         return view

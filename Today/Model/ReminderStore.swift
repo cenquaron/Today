@@ -68,6 +68,7 @@ final class ReminderStore {
         return ekReminder.calendarItemIdentifier
     }
     
+    
     func remove(with id: Reminder.ID) throws {
         guard isAvailable else {
             throw TodayError.accessDenied

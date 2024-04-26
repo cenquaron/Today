@@ -1,4 +1,5 @@
 import UIKit
+import EventKit
 
 class ReminderListViewController: UIViewController {
     
@@ -192,12 +193,12 @@ class ReminderListViewController: UIViewController {
         reminderStoreChanged()
     }
     
-    @objc func creareButtonDidTapped() {
-        print("creareButtonDidTapped")
-//        let controller = EditorViewController(reminder: )
-//        controller.delegate = self
-//        let openController = UINavigationController(rootViewController: controller)
-//        self.present(openController, animated: true)
+    @objc func createButtonDidTapped() {
+        let newReminder = Reminder(title: "", dueDate: Date(), notes: nil)
+        let editorViewController = EditorViewController(reminder: newReminder)
+        editorViewController.delegate = self
+        let navigationController = UINavigationController(rootViewController: editorViewController)
+        present(navigationController, animated: true)
     }
 }
 
@@ -240,13 +241,12 @@ extension ReminderListViewController: UITableViewDataSource, UITableViewDelegate
             }
             
             if indexPath.row == filterReminder.count {
-                //MARK: - //Need Open EditorViewController
-                print("Need Open EditorViewController")
-                //                let controller = EditorViewController(reminder: self)
-                //                controller.delegate = self
-                //                let openController = UINavigationController(rootViewController: controller)
-                //                self.present(openController, animated: true)
-                
+                let newReminder = Reminder(title: "", dueDate: Date(), notes: nil)
+                let editorViewController = EditorViewController(reminder: newReminder)
+                editorViewController.delegate = self
+                let navigationController = UINavigationController(rootViewController: editorViewController)
+                self.present(navigationController, animated: true)
+                tableView.reloadData()
             } else {
                 let selectedReminder = filterReminder[indexPath.row]
                 guard let indexInReminders = reminderItem.firstIndex(where: { $0.id == selectedReminder.id }) else {
@@ -258,8 +258,7 @@ extension ReminderListViewController: UITableViewDataSource, UITableViewDelegate
             }
         }
     }
-    
-    
+
     func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         if indexPath.row == filterReminder.count {
             return nil
@@ -303,6 +302,7 @@ extension ReminderListViewController: UITableViewDataSource, UITableViewDelegate
             }
         }
     }
+
     
     
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
@@ -312,6 +312,7 @@ extension ReminderListViewController: UITableViewDataSource, UITableViewDelegate
 
         let action = UIContextualAction(style: .destructive, title: nil) { [weak self] (_, _, completion) in
             guard let guest = self else { return }
+
             
             let deletedReminder = guest.filterReminder[indexPath.row]
             if let indexInReminders = guest.reminderItem.firstIndex(of: deletedReminder) {
@@ -354,9 +355,9 @@ extension ReminderListViewController: UITableViewDataSource, UITableViewDelegate
                 guard let self = self else { return }
                 let selectedReminder = self.filterReminder[indexPath.row]
                 self.completeReminder(withId: selectedReminder.id)
+                tableView.reloadData()
             }
-            
-            
+  
             let edit = UIAction(title: "Редактировать", image: UIImage(systemName: "pencil")) { _ in
                 let selectedReminder = self.reminderItem[indexPath.row]
                 let controller = EditorViewController(reminder: selectedReminder)
@@ -450,7 +451,7 @@ extension ReminderListViewController {
         btn.layer.shadowColor = UIColor(red: 0/255, green: 49/255, blue: 102/255, alpha: 0.30).cgColor
         btn.layer.shadowOffset = CGSize(width: 0, height: 5)
         btn.layer.shadowOpacity = 0.5
-        btn.addTarget(self, action: #selector(creareButtonDidTapped), for: .touchUpInside)
+        btn.addTarget(self, action: #selector(createButtonDidTapped), for: .touchUpInside)
         return btn
     }
 }
