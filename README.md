@@ -1,2 +1,2 @@
 # Today
-Today List in UIKit programmatically, MVC whit inheritance Reminder App
+Today List in UIKit programmatically, MVC with inheritance Reminder App
