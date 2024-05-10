@@ -6,7 +6,7 @@ class EditorViewController: UIViewController {
     weak var delegate: ReminderUpdateDelegate?
     private var notes: String?
     var reminder: Reminder
-    
+    var onSave: (() -> Void)?
     
     //MARK: - UI Components
     private let scrollView = scrollView()
@@ -91,6 +91,7 @@ class EditorViewController: UIViewController {
             let eventStore = ReminderStore()
             try eventStore.save(reminder)
             delegate?.didUpdateReminder(reminder)
+            onSave?()
             self.dismiss(animated: true)
         } catch {
             print("failed save \(error)")

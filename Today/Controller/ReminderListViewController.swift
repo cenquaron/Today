@@ -146,8 +146,8 @@ class ReminderListViewController: UIViewController {
         if let index = reminderItem.firstIndex(where: { $0.id == id }) {
             reminderItem[index].isComplete.toggle()
             updateReminder(reminderItem[index])
-            tableView.reloadData()
             updateProgressHeader()
+            tableView.reloadData()
         }
     }
     
@@ -155,6 +155,9 @@ class ReminderListViewController: UIViewController {
         let newReminder = Reminder(title: "", dueDate: Date(), notes: " ")
         let editorViewController = EditorViewController(reminder: newReminder)
         editorViewController.delegate = self
+        editorViewController.onSave = { [weak self] in
+            self?.updateReminderTask()
+        }
         let navigationController = UINavigationController(rootViewController: editorViewController)
         present(navigationController, animated: true)
     }
@@ -167,7 +170,6 @@ class ReminderListViewController: UIViewController {
         backgroundView.layer.addSublayer(gradientLayer)
         tableView.backgroundView = backgroundView
     }
-    
     
     private func showError(_ error: Error) {
         let alertTitle = NSLocalizedString("Error", comment: "Error alert title")
@@ -185,9 +187,9 @@ class ReminderListViewController: UIViewController {
     
     @objc func didChangeListStyle(_ segment: UISegmentedControl) {
         listStyle = ReminderListStyle(rawValue: segment.selectedSegmentIndex) ?? .today
-        tableView.reloadData()
         refreshBackground()
         updateProgressHeader()
+        tableView.reloadData()
     }
     
     @objc func eventStoreChanged(_ notification: NSNotification) {
@@ -356,8 +358,9 @@ extension ReminderListViewController: UITableViewDataSource, UITableViewDelegate
                 tableView.reloadData()
             }
   
-            let edit = UIAction(title: "Редактировать", image: UIImage(systemName: "pencil")) { _ in
-                let selectedReminder = self.reminderItem[indexPath.row]
+            let edit = UIAction(title: "Редактировать", image: UIImage(systemName: "pencil")) { [self] _ in
+
+                let selectedReminder = self.filterReminder[indexPath.row]
                 let controller = EditorViewController(reminder: selectedReminder)
                 controller.delegate = self
                 let openController = UINavigationController(rootViewController: controller)
@@ -463,6 +466,7 @@ extension ReminderListViewController: ReminderUpdateDelegate {
             
             let indexPath = IndexPath(row: index, section: 0)
             tableView.reloadRows(at: [indexPath], with: .automatic)
+            tableView.reloadData()
         }
     }
 }
