@@ -38,9 +38,7 @@ class EditorViewController: UIViewController {
         view.backgroundColor = .todayNavigationBackground
         setupUI()
         update()
-        
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .save, target: self, action: #selector(saveButtonTap))
-        
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(_:)), name: UIResponder.keyboardWillShowNotification, object: nil)
     }
     
@@ -50,6 +48,7 @@ class EditorViewController: UIViewController {
         titleField.delegate = self
         
         titleLabel.text = "TITLE"
+        titleField.placeholder = "Что нужно делать?" //Accesebility
         titleField.text = reminder.title
         
         dateLabel.text = "DATE"
@@ -98,6 +97,7 @@ class EditorViewController: UIViewController {
         }
     }
 }
+
 
 //MARK: Setup UI
 extension EditorViewController {
@@ -185,6 +185,7 @@ extension EditorViewController {
     }
 }
 
+
 //MARK: Keyboard Settings
 extension EditorViewController: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
@@ -229,6 +230,7 @@ extension EditorViewController: UITextFieldDelegate {
     }
 }
 
+
 //MARK: - Make UI
 extension EditorViewController {
     private static func contentView() -> UIView {
@@ -251,7 +253,7 @@ extension EditorViewController {
     private static func labelText() -> UILabel {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.font = .systemFont(ofSize: 14)
+        label.font = .systemFont(ofSize: 15)
         label.textColor = .labelPrimary
         return label
     }
@@ -263,7 +265,7 @@ extension EditorViewController {
         view.widthAnchor.constraint(equalToConstant: 370).isActive = true
         view.layer.cornerRadius = 9
         view.clearButtonMode = .whileEditing
-        view.backgroundColor = .todayListCellBackground
+        view.backgroundColor = .backSecondary
         return view
     }
     
@@ -271,7 +273,7 @@ extension EditorViewController {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
         view.layer.cornerRadius = 9
-        view.backgroundColor = .todayListCellBackground
+        view.backgroundColor = .backSecondary
         view.heightAnchor.constraint(equalToConstant: 370).isActive = true
         view.widthAnchor.constraint(equalToConstant: 370).isActive = true
         return view
@@ -301,7 +303,7 @@ extension EditorViewController {
         let view = UITextView()
         view.translatesAutoresizingMaskIntoConstraints = false
         view.layer.cornerRadius = 9
-        view.backgroundColor = .todayListCellBackground
+        view.backgroundColor = .backSecondary
         view.widthAnchor.constraint(equalToConstant: 370).isActive = true
         view.heightAnchor.constraint(equalToConstant: 200).isActive = true
         view.textContainerInset = UIEdgeInsets(top: 8, left: 8, bottom: 4, right: 8)

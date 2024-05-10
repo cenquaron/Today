@@ -16,6 +16,7 @@ class ReminderListViewController: UIViewController {
         ReminderListStyle.today.name, ReminderListStyle.future.name, ReminderListStyle.all.name
     ])
     
+    
     //MARK: - UI Components
     lazy var tableView: UITableView = {
         let view = UITableView(frame: .zero, style: .grouped)
@@ -36,12 +37,15 @@ class ReminderListViewController: UIViewController {
         listStyleSegmentControl.addTarget(self, action: #selector(didChangeListStyle), for: .valueChanged)
         navigationItem.titleView = listStyleSegmentControl
     }
-    private lazy var createButton = creareButton()
     
     
     //MARK: - LifeCycle
     override func viewDidLoad() {
         super.viewDidLoad()
+        navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(createButtonDidTapped))
+        
+        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .bookmarks, target: self, action: #selector(statisticsController))
+
         tableView.reloadData()
         setupSegmentListControl()
         setupTableView()
@@ -67,7 +71,7 @@ class ReminderListViewController: UIViewController {
     
     
     //MARK: - Selectors
-    var progress: CGFloat {
+    private var progress: CGFloat {
         let chunkSize = 1.0 / CGFloat(filterReminder.count)
         let progress = filterReminder.reduce(0.0) {
             let chunk = $1.isComplete ? chunkSize : 0
@@ -84,7 +88,7 @@ class ReminderListViewController: UIViewController {
         updateProgressHeader()
     }
     
-    func updateReminderTask() {
+    private func updateReminderTask() {
         Task {
             do {
                 try await reminderStore.requestAccess()
@@ -99,7 +103,7 @@ class ReminderListViewController: UIViewController {
         }
     }
     
-    func updateProgressHeader() {
+    private func updateProgressHeader() {
         headerView.progress = progress
     }
     
@@ -117,13 +121,13 @@ class ReminderListViewController: UIViewController {
         }
     }
     
-    func reminderStoreChanged() {
+    private func reminderStoreChanged() {
         Task {
             reminderItem = try await reminderStore.readAll()
         }
     }
     
-    func updateReminder(_ reminder: Reminder) {
+    private func updateReminder(_ reminder: Reminder) {
         let index = reminderItem.indexOfReminder(withId: reminder.id)
         reminderItem[index] = reminder
         do {
@@ -133,33 +137,30 @@ class ReminderListViewController: UIViewController {
         }
     }
     
-    func reminder(withId id: Reminder.ID) -> Reminder {
+    private func reminder(withId id: Reminder.ID) -> Reminder {
         let index = reminderItem.indexOfReminder(withId: id)
         return reminderItem[index]
     }
     
-    func completeReminder(withId id: Reminder.ID) {
+    private func completeReminder(withId id: Reminder.ID) {
         if let index = reminderItem.firstIndex(where: { $0.id == id }) {
             reminderItem[index].isComplete.toggle()
             updateReminder(reminderItem[index])
-            tableView.reloadRows(at: [IndexPath(row: index, section: 0)], with: .automatic)
+            tableView.reloadData()
             updateProgressHeader()
         }
     }
     
-    func addReminder(_ reminder: Reminder) {
-        var reminder = reminder
-        do {
-            let idFromStore = try reminderStore.save(reminder)
-            reminder.id = idFromStore
-            reminderItem.append(reminder)
-        } catch TodayError.accessDenied {
-        } catch {
-            showError(error)
-        }
+    private func addReminder() {
+        let newReminder = Reminder(title: "", dueDate: Date(), notes: " ")
+        let editorViewController = EditorViewController(reminder: newReminder)
+        editorViewController.delegate = self
+        let navigationController = UINavigationController(rootViewController: editorViewController)
+        present(navigationController, animated: true)
     }
+
     
-    func refreshBackground() {
+    private func refreshBackground() {
         tableView.backgroundView = nil
         let backgroundView = UIView()
         let gradientLayer = CAGradientLayer.gradientLayer(for: listStyle, in: view.frame)
@@ -194,11 +195,12 @@ class ReminderListViewController: UIViewController {
     }
     
     @objc func createButtonDidTapped() {
-        let newReminder = Reminder(title: "", dueDate: Date(), notes: nil)
-        let editorViewController = EditorViewController(reminder: newReminder)
-        editorViewController.delegate = self
-        let navigationController = UINavigationController(rootViewController: editorViewController)
-        present(navigationController, animated: true)
+        addReminder()
+    }
+    
+    @objc func statisticsController() {
+        let statisticsController = StatisticsViewController(reminder: reminderItem)
+        navigationController?.pushViewController(statisticsController, animated: true)
     }
 }
 
@@ -208,6 +210,7 @@ extension ReminderListViewController: UITableViewDataSource, UITableViewDelegate
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return filterReminder.count + 1
     }
+    
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if indexPath.row == filterReminder.count {
@@ -241,12 +244,7 @@ extension ReminderListViewController: UITableViewDataSource, UITableViewDelegate
             }
             
             if indexPath.row == filterReminder.count {
-                let newReminder = Reminder(title: "", dueDate: Date(), notes: nil)
-                let editorViewController = EditorViewController(reminder: newReminder)
-                editorViewController.delegate = self
-                let navigationController = UINavigationController(rootViewController: editorViewController)
-                self.present(navigationController, animated: true)
-                tableView.reloadData()
+                addReminder()
             } else {
                 let selectedReminder = filterReminder[indexPath.row]
                 guard let indexInReminders = reminderItem.firstIndex(where: { $0.id == selectedReminder.id }) else {
@@ -259,6 +257,7 @@ extension ReminderListViewController: UITableViewDataSource, UITableViewDelegate
         }
     }
 
+    
     func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         if indexPath.row == filterReminder.count {
             return nil
@@ -304,9 +303,8 @@ extension ReminderListViewController: UITableViewDataSource, UITableViewDelegate
     }
 
     
-    
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-        if indexPath.row == reminderItem.count {
+        if indexPath.row == filterReminder.count {
             return nil
         }
 
@@ -393,17 +391,16 @@ extension ReminderListViewController: UITableViewDataSource, UITableViewDelegate
     
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 50
+        return 60
     }
 }
 
 
-//MARK: - Setup UITableView
+//MARK: - Setup UITableView Constrain
 extension ReminderListViewController {
     private func setupUI() {
         setupHeaderview()
         setupUITableViewConstrain()
-        setupCreateButton()
     }
     
     private func setupHeaderview() {
@@ -427,17 +424,6 @@ extension ReminderListViewController {
             tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
         ])
     }
-    
-    private func setupCreateButton() {
-        view.addSubview(createButton)
-        
-        NSLayoutConstraint.activate([
-            createButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -20),
-            createButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            createButton.widthAnchor.constraint(equalToConstant: 44),
-            createButton.heightAnchor.constraint(equalToConstant: 44)
-        ])
-    }
 }
 
 
@@ -456,6 +442,7 @@ extension ReminderListViewController {
     }
 }
 
+
 //MARK: - Used Protocol
 extension ReminderListViewController: ReminderItemListCellDelegate {
     func didTapDoneButton(for reminder: Reminder) {
@@ -464,6 +451,7 @@ extension ReminderListViewController: ReminderItemListCellDelegate {
             tableView.reloadRows(at: [IndexPath(row: index, section: 0)], with: .automatic)
             updateProgressHeader()
             updateReminder(reminder)
+            tableView.reloadData()
         }
     }
 }
@@ -478,4 +466,3 @@ extension ReminderListViewController: ReminderUpdateDelegate {
         }
     }
 }
-

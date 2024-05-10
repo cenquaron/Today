@@ -7,6 +7,7 @@ class ReminderItemListCell: UITableViewCell {
     weak var delegate: ReminderItemListCellDelegate?
     private var reminder: Reminder!
     
+    
     //MARK: - UI Components
     private lazy var doneButton = completeButton()
     private var infoStackView = mainInfoStackView()
@@ -73,7 +74,7 @@ extension ReminderItemListCell {
         dateLabel.font = .body2
         
         NSLayoutConstraint.activate([
-            infoStackView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 5),
+            infoStackView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 10),
             infoStackView.leadingAnchor.constraint(equalTo: doneButton.trailingAnchor, constant: 12),
             infoStackView.trailingAnchor.constraint(equalTo: markMore.trailingAnchor, constant: -16),
         ])
@@ -90,8 +91,6 @@ extension ReminderItemListCell {
         ])
     }
 }
-
-
 
 
 //MARK: - Make UI

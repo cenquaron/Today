@@ -6,6 +6,7 @@ class ReminderViewController: UIViewController {
     private var picSquareHeightConstraint: NSLayoutConstraint?
     private var reminder: Reminder
     
+    
     //MARK: - UI Components
     private let scrollView = scrollView()
     private let contentView = contentView()
@@ -70,6 +71,7 @@ class ReminderViewController: UIViewController {
     }
 }
 
+
 //MARK: Setup Constrain
 extension ReminderViewController {
     private func setupUI() {
@@ -94,7 +96,7 @@ extension ReminderViewController {
     
     private func setupContentSquare() {
         scrollView.addSubview(contentView)
-
+        
         picSquareHeightConstraint?.isActive = true
         
         NSLayoutConstraint.activate([
@@ -105,6 +107,7 @@ extension ReminderViewController {
     
     private func setupTitleStack() {
         contentView.addSubview(titleLabels)
+        titleLabels.numberOfLines = 3
         
         NSLayoutConstraint.activate([
             titleLabels.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 20),
@@ -118,12 +121,10 @@ extension ReminderViewController {
         contentView.addSubview(dateImage)
         
         NSLayoutConstraint.activate([
-            dateImage.topAnchor.constraint(equalTo: titleLabels.bottomAnchor, constant: 20),
-            dateImage.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20),
-            
-            dateLabel.centerYAnchor.constraint(equalTo: dateImage.centerYAnchor),
+            dateLabel.topAnchor.constraint(equalTo: titleLabels.bottomAnchor, constant: 25),
             dateLabel.leadingAnchor.constraint(equalTo: dateImage.leadingAnchor, constant: 40),
-            dateLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -30)
+            dateImage.centerYAnchor.constraint(equalTo: dateLabel.centerYAnchor),
+            dateImage.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20)
         ])
     }
     
@@ -132,12 +133,10 @@ extension ReminderViewController {
         contentView.addSubview(dateTimeImage)
         
         NSLayoutConstraint.activate([
-            dateTimeImage.topAnchor.constraint(equalTo: dateImage.bottomAnchor, constant: 15),
-            dateTimeImage.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20),
-            
-            dateTimeLabel.centerYAnchor.constraint(equalTo: dateTimeImage.centerYAnchor),
+            dateTimeLabel.topAnchor.constraint(equalTo: dateLabel.bottomAnchor, constant: 25),
             dateTimeLabel.leadingAnchor.constraint(equalTo: dateTimeImage.leadingAnchor, constant: 40),
-            dateTimeLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -30),
+            dateTimeImage.centerYAnchor.constraint(equalTo: dateTimeLabel.centerYAnchor),
+            dateTimeImage.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20)
         ])
     }
     
@@ -148,15 +147,13 @@ extension ReminderViewController {
         let descriptionSize = descriptionLabel.sizeThatFits(CGSize(width: contentView.bounds.width - 40, height: .greatestFiniteMagnitude))
         
         NSLayoutConstraint.activate([
-
+            descriptionLabel.topAnchor.constraint(equalTo: dateTimeLabel.bottomAnchor, constant: 25),
+            descriptionLabel.leadingAnchor.constraint(equalTo: descriptionImage.leadingAnchor, constant: 40),
+            descriptionLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -30),
+            descriptionLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -20),
             
-//            descriptionLabel.topAnchor.constraint(equalTo: dateTimeLabel.bottomAnchor, constant: 15),
-//            descriptionLabel.leadingAnchor.constraint(equalTo: descriptionImage.leadingAnchor, constant: 40),
-//            descriptionLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -30),
-//            descriptionLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -20),
-//            
-//            descriptionImage.centerYAnchor.constraint(equalTo: descriptionLabel.centerYAnchor, constant: 7),
-//            descriptionImage.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20)
+            descriptionImage.centerYAnchor.constraint(equalTo: descriptionLabel.centerYAnchor),
+            descriptionImage.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20)
         ])
         
         let picSquareHeight = descriptionSize.height + 170
@@ -165,6 +162,7 @@ extension ReminderViewController {
         contentView.layoutIfNeeded()
     }
 }
+
 
 //MARK: - Make UI
 extension ReminderViewController {

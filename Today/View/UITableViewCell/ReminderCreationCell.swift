@@ -61,7 +61,7 @@ extension ReminderCreationCell {
         label.translatesAutoresizingMaskIntoConstraints = false
         label.text = "Create Task" //Accesebility
         label.font = .systemFont(ofSize: 16)
-        label.textColor = .labelPrimary
+        label.textColor = .labelTertiary
         return label
     }
 }

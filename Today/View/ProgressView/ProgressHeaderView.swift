@@ -68,8 +68,8 @@ extension ProgressHeaderView {
         containerView.addSubview(lowerView)
         upperView.translatesAutoresizingMaskIntoConstraints = false
         lowerView.translatesAutoresizingMaskIntoConstraints = false
-        upperView.backgroundColor = .todayProgressUpperBackground
-        lowerView.backgroundColor = .todayProgressLowerBackground
+        upperView.backgroundColor = .todayProgressUpperBackground //clearPlace
+        lowerView.backgroundColor = .todayProgressLowerBackground //filling
 
 
         NSLayoutConstraint.activate([
