@@ -57,6 +57,7 @@ class ReminderListViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        tableView.reloadData()
         updateReminderTask()
     }
     
@@ -124,6 +125,7 @@ class ReminderListViewController: UIViewController {
     private func reminderStoreChanged() {
         Task {
             reminderItem = try await reminderStore.readAll()
+            reloadTableViewData()
         }
     }
     
@@ -147,7 +149,7 @@ class ReminderListViewController: UIViewController {
             reminderItem[index].isComplete.toggle()
             updateReminder(reminderItem[index])
             updateProgressHeader()
-            tableView.reloadData()
+            reloadTableViewData()
         }
     }
     
@@ -157,6 +159,7 @@ class ReminderListViewController: UIViewController {
         editorViewController.delegate = self
         editorViewController.onSave = { [weak self] in
             self?.updateReminderTask()
+            self?.reloadTableViewData()
         }
         let navigationController = UINavigationController(rootViewController: editorViewController)
         present(navigationController, animated: true)
@@ -185,11 +188,16 @@ class ReminderListViewController: UIViewController {
         present(alert, animated: true, completion: nil)
     }
     
+    private func reloadTableViewData() {
+        DispatchQueue.main.async {
+            self.tableView.reloadData()
+        }
+    }
+    
     @objc func didChangeListStyle(_ segment: UISegmentedControl) {
         listStyle = ReminderListStyle(rawValue: segment.selectedSegmentIndex) ?? .today
         refreshBackground()
         updateProgressHeader()
-        tableView.reloadData()
     }
     
     @objc func eventStoreChanged(_ notification: NSNotification) {

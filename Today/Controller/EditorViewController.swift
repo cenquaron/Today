@@ -8,6 +8,7 @@ class EditorViewController: UIViewController {
     var reminder: Reminder
     var onSave: (() -> Void)?
     
+    
     //MARK: - UI Components
     private let scrollView = scrollView()
     private let contentView = contentView()
