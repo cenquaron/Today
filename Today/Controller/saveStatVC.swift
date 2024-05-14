@@ -1,6 +1,6 @@
 import UIKit
 
-class StatisticsViewController: UIViewController {
+class ssssss: UIViewController {
     
     //MARK: - Variables
     private var reminder: [Reminder] = []
@@ -8,10 +8,8 @@ class StatisticsViewController: UIViewController {
     
     
     //MARK: - UI Components
-    private let scrollView = scrollView()
-    private let contentView = contentView()
-    private let dailyPerfContentView = contentView()
     private let titleLabel = labelText()
+    private let contentView = contentView()
     private lazy var dropDownBtn = dropDownButton()
     var dropDownStackView: UIStackView?
 
@@ -29,8 +27,8 @@ class StatisticsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .backPrimary
-        updateUI()
         setupUI()
+        updateUI()
     }
     
     
@@ -39,9 +37,6 @@ class StatisticsViewController: UIViewController {
         titleLabel.text = "daily perfomance".uppercased()
         dropDownBtn.addTarget(self, action: #selector(didTapDropDownButton), for: .touchUpInside)
         
-        dailyPerfContentView.backgroundColor = .backPrimary
-        dailyPerfContentView.layer.cornerRadius = 10
-        dailyPerfContentView.backgroundColor = .todayListCellBackground
     }
     
     func createDropDownMenu() {
@@ -51,7 +46,7 @@ class StatisticsViewController: UIViewController {
         dropDownStackView?.distribution = .fillEqually
         dropDownStackView?.spacing = 5
         dropDownStackView?.translatesAutoresizingMaskIntoConstraints = false
-        dropDownStackView?.backgroundColor = .backTh
+        dropDownStackView?.backgroundColor = .systemBackground
 
         
         for option in dropDownOptions {
@@ -87,99 +82,72 @@ class StatisticsViewController: UIViewController {
 
 
 //MARK: Setup Constrain
-extension StatisticsViewController {
+extension ssssss {
     private func setupUI() {
-        setupScrollView()
         setupTitleLabel()
-        setupDaylyPerfContentView()
+        setupContentView()
         setupDailyStatisticsView()
         setupDropDownButton()
     }
     
-    private func setupScrollView() {
-        view.addSubview(scrollView)
-        scrollView.addSubview(contentView)
-        
-        NSLayoutConstraint.activate([
-            scrollView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
-            scrollView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
-            scrollView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
-            scrollView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
-            
-            contentView.topAnchor.constraint(equalTo: scrollView.topAnchor),
-            contentView.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor),
-            contentView.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor),
-            contentView.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor),
-            contentView.heightAnchor.constraint(equalToConstant: 800),
-            contentView.widthAnchor.constraint(equalTo: scrollView.widthAnchor)
-        ])
-    }
-    
     private func setupTitleLabel() {
-        contentView.addSubview(titleLabel)
+        view.addSubview(titleLabel)
         
         NSLayoutConstraint.activate([
-            titleLabel.topAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.topAnchor, constant: 10),
-            titleLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 25)
+            titleLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 10),
+            titleLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 25)
         ])
     }
     
-    private func setupDaylyPerfContentView() {
-        contentView.addSubview(dailyPerfContentView)
+    private func setupContentView() {
+        view.addSubview(contentView)
         
         NSLayoutConstraint.activate([
-            dailyPerfContentView.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 20),
-            dailyPerfContentView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20),
-            dailyPerfContentView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -20),
-            dailyPerfContentView.heightAnchor.constraint(equalToConstant: 330)
+            contentView.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 20),
+            contentView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
+            contentView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
+            contentView.heightAnchor.constraint(equalToConstant: 350)
         ])
     }
     
     private func setupDailyStatisticsView() {
-        let barChartView = DailyStatisticsView(frame: CGRect(x: 0, y: 20, width: view.frame.width - 40, height: 280))
+        let barChartView = DailyStatisticsView(frame: CGRect(x: 20, y: 165, width: view.frame.width - 40, height: 280))
+
         barChartView.backgroundColor = .clear
     
         barChartView.layer.cornerRadius = 10
-        dailyPerfContentView.addSubview(barChartView)
+        view.addSubview(barChartView)
         
         barChartView.taskCounts = [2, 4, 1, 5, 0, 3, 2]
     }
     
     private func setupDropDownButton() {
-        contentView.addSubview(dropDownBtn)
+        view.addSubview(dropDownBtn)
         
         NSLayoutConstraint.activate([
-            dropDownBtn.topAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.topAnchor, constant: 2.5),
-            dropDownBtn.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -25),
+            dropDownBtn.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 2.5),
+            dropDownBtn.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -25),
         ])
     }
 }
 
 
 //MARK: - Make UI
-extension StatisticsViewController {
-    private static func scrollView() -> UIScrollView {
-        let view = UIScrollView()
-        view.translatesAutoresizingMaskIntoConstraints = false
-        view.showsVerticalScrollIndicator = true
-        view.alwaysBounceVertical = true
-        view.backgroundColor = .backPrimary
-        return view
-    }
-    
-    private static func contentView() -> UIView {
-        let view = UIView()
-        view.translatesAutoresizingMaskIntoConstraints = false
-        view.backgroundColor = .backPrimary
-        return view
-    }
-    
+extension ssssss {
     private static func labelText() -> UILabel {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.font = .body
         label.textColor = .labelPrimary
         return label
+    }
+    
+    private static func contentView() -> UIView {
+        let view = UIView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.backgroundColor = .todayListCellBackground
+        view.layer.cornerRadius = 5
+        return view
     }
     
     private func dropDownButton() -> UIButton {

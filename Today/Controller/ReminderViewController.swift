@@ -32,7 +32,7 @@ class ReminderViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         title = "Reminder"
-        view.backgroundColor = .todayNavigationBackground
+        view.backgroundColor = .backPrimary
         setupUI()
         update()
         
@@ -171,7 +171,7 @@ extension ReminderViewController {
         view.translatesAutoresizingMaskIntoConstraints = false
         view.showsVerticalScrollIndicator = true
         view.alwaysBounceVertical = true
-        view.backgroundColor = .todayNavigationBackground
+        view.backgroundColor = .backPrimary
         return view
     }
     

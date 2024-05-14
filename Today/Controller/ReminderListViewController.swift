@@ -43,7 +43,7 @@ class ReminderListViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(createButtonDidTapped))
-        
+        view.backgroundColor = .backPrimary
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .bookmarks, target: self, action: #selector(statisticsController))
 
         tableView.reloadData()
@@ -52,12 +52,10 @@ class ReminderListViewController: UIViewController {
         updateReminderTask()
         updateProgressHeader()
         prepareReminderStore()
-        refreshBackground()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        tableView.reloadData()
         updateReminderTask()
     }
     
@@ -85,8 +83,8 @@ class ReminderListViewController: UIViewController {
         tableView.delegate = self
         tableView.dataSource = self
         tableView.tableHeaderView = headerView
-        setupUI()
         updateProgressHeader()
+        setupUI()
     }
     
     private func updateReminderTask() {
@@ -166,13 +164,13 @@ class ReminderListViewController: UIViewController {
     }
 
     
-    private func refreshBackground() {
-        tableView.backgroundView = nil
-        let backgroundView = UIView()
-        let gradientLayer = CAGradientLayer.gradientLayer(for: listStyle, in: view.frame)
-        backgroundView.layer.addSublayer(gradientLayer)
-        tableView.backgroundView = backgroundView
-    }
+//    private func refreshBackground() {
+//        tableView.backgroundView = nil
+//        let backgroundView = UIView()
+//        let gradientLayer = CAGradientLayer.gradientLayer(for: listStyle, in: view.frame)
+//        backgroundView.layer.addSublayer(gradientLayer)
+//        tableView.backgroundView = backgroundView
+//    }
     
     private func showError(_ error: Error) {
         let alertTitle = NSLocalizedString("Error", comment: "Error alert title")
@@ -196,8 +194,8 @@ class ReminderListViewController: UIViewController {
     
     @objc func didChangeListStyle(_ segment: UISegmentedControl) {
         listStyle = ReminderListStyle(rawValue: segment.selectedSegmentIndex) ?? .today
-        refreshBackground()
         updateProgressHeader()
+        tableView.reloadData()
     }
     
     @objc func eventStoreChanged(_ notification: NSNotification) {
@@ -430,10 +428,13 @@ extension ReminderListViewController {
         
         NSLayoutConstraint.activate([
             tableView.topAnchor.constraint(equalTo: view.topAnchor),
-            tableView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
-            tableView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
+            tableView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 20),
+            tableView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -20),
             tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
         ])
+
+        tableView.layer.cornerRadius = 10
+        tableView.layer.masksToBounds = true
     }
 }
 

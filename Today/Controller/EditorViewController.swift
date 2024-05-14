@@ -36,7 +36,7 @@ class EditorViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         title = "Add Reminder"
-        view.backgroundColor = .todayNavigationBackground
+        view.backgroundColor = .backPrimary
         setupUI()
         update()
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .save, target: self, action: #selector(saveButtonTap))
@@ -239,7 +239,7 @@ extension EditorViewController {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
         view.heightAnchor.constraint(equalToConstant: 800).isActive = true
-        view.backgroundColor = .todayNavigationBackground
+        view.backgroundColor = .backPrimary
         return view
     }
     
@@ -248,7 +248,7 @@ extension EditorViewController {
         view.translatesAutoresizingMaskIntoConstraints = false
         view.showsVerticalScrollIndicator = true
         view.alwaysBounceVertical = true
-        view.backgroundColor = .todayNavigationBackground
+        view.backgroundColor = .backPrimary
         return view
     }
     
@@ -284,7 +284,7 @@ extension EditorViewController {
     private static func datePicker() -> UIDatePicker {
         let date = UIDatePicker()
         date.translatesAutoresizingMaskIntoConstraints = false
-        date.tintColor = .todayDetailCellTint
+        date.tintColor = .systemBlue
         date.datePickerMode = .date
         date.preferredDatePickerStyle = .inline
         date.locale = Locale.current.calendar.locale
