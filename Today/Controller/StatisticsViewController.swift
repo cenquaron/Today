@@ -3,8 +3,13 @@ import UIKit
 class StatisticsViewController: UIViewController {
     
     //MARK: - Variables
-    private var reminder: [Reminder] = []
-    private let dropDownOptions = ["Option 1", "Option 2", "Option 3"]
+    private var reminders: [Reminder] = []
+    private let dropDownOptions = ["Option 1", "Option 2"]
+    private var selectedOptionIndex: Int = 0 {
+        didSet {
+            updateChartData()
+        }
+    }
     
     
     //MARK: - UI Components
@@ -14,11 +19,12 @@ class StatisticsViewController: UIViewController {
     private let titleLabel = labelText()
     private lazy var dropDownBtn = dropDownButton()
     var dropDownStackView: UIStackView?
-
+    private let barChartView = DailyStatisticsView(frame: CGRect(x: 0, y: 20, width: UIScreen.main.bounds.width - 40, height: 280))
+    
     
     //MARK: - LifeCycle
-    init(reminder: [Reminder]) {
-        self.reminder = reminder
+    init(reminders: [Reminder]) {
+        self.reminders = reminders
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -42,6 +48,9 @@ class StatisticsViewController: UIViewController {
         dailyPerfContentView.backgroundColor = .backPrimary
         dailyPerfContentView.layer.cornerRadius = 10
         dailyPerfContentView.backgroundColor = .todayListCellBackground
+        
+        barChartView.backgroundColor = .clear
+        barChartView.layer.cornerRadius = 10
     }
     
     func createDropDownMenu() {
@@ -52,7 +61,6 @@ class StatisticsViewController: UIViewController {
         dropDownStackView?.spacing = 5
         dropDownStackView?.translatesAutoresizingMaskIntoConstraints = false
         dropDownStackView?.backgroundColor = .backTh
-
         
         for option in dropDownOptions {
             let optionButton = UIButton()
@@ -63,12 +71,67 @@ class StatisticsViewController: UIViewController {
         }
         
         view.addSubview(dropDownStackView!)
-
+        
         NSLayoutConstraint.activate([
             dropDownStackView!.topAnchor.constraint(equalTo: dropDownBtn.bottomAnchor, constant: 5),
             dropDownStackView!.leadingAnchor.constraint(equalTo: dropDownBtn.leadingAnchor, constant: -10),
             dropDownStackView!.trailingAnchor.constraint(equalTo: dropDownBtn.trailingAnchor, constant: 10)
         ])
+    }
+    
+    private func updateChartData() {
+        let dataForOption = fetchDataForOption(index: selectedOptionIndex)
+        barChartView.taskCounts = dataForOption
+    }
+    
+    private func fetchDataForOption(index: Int) -> [Int] {
+        let today = Date()
+        let calendar = Calendar.current
+        var completedTaskCounts = [Int]()
+        var range = 0..<0
+        
+        switch index {
+        case 0:
+            // Option 1: Data for the current week with a range of -3 to +3 days from today
+            let startOfWeek = calendar.date(from: calendar.dateComponents([.yearForWeekOfYear, .weekOfYear], from: today))!
+            let start = calendar.date(byAdding: .day, value: -3, to: startOfWeek)!
+            let end = calendar.date(byAdding: .day, value: 3, to: startOfWeek)!
+            let days = calendar.dateComponents([.day], from: start, to: end).day!
+            for day in -days/2...days/2 {
+                let date = calendar.date(byAdding: .day, value: day, to: today)!
+                var completedTaskCount = 0
+                for reminder in reminders {
+                    if calendar.isDate(reminder.dueDate, inSameDayAs: date) {
+                        if reminder.isComplete {
+                            completedTaskCount += 1
+                        }
+                    }
+                }
+                completedTaskCounts.append(completedTaskCount)
+            }
+        case 1:
+            let startOfWeek = calendar.date(from: calendar.dateComponents([.yearForWeekOfYear, .weekOfYear], from: today))!
+            let start = calendar.date(byAdding: .day, value: -3, to: startOfWeek)!
+            let end = calendar.date(byAdding: .day, value: 3, to: startOfWeek)!
+            range = calendar.range(of: .day, in: .weekOfMonth, for: today)!
+            let days = calendar.dateComponents([.day], from: start, to: end).day!
+            for day in -days/2...days/2 {
+                let date = calendar.date(byAdding: .day, value: day, to: today)!
+                var completedTaskCount = 0
+                for reminder in reminders {
+                    if calendar.isDate(reminder.dueDate, inSameDayAs: date) {
+                        if reminder.isComplete {
+                            completedTaskCount += 1
+                        }
+                    }
+                }
+                completedTaskCounts.append(completedTaskCount)
+            }
+        default:
+            break
+        }
+        
+        return completedTaskCounts
     }
     
     @objc func didTapDropDownButton() {
@@ -82,7 +145,15 @@ class StatisticsViewController: UIViewController {
     @objc func didSelectOption(_ sender: UIButton) {
         dropDownBtn.setTitle(sender.currentTitle, for: .normal)
         dropDownStackView?.isHidden = true
+        if let index = dropDownOptions.firstIndex(of: sender.currentTitle ?? "") {
+            selectedOptionIndex = index
+            if index == 1 {
+                // If Option 2 is selected, update the DailyStatisticsView
+                barChartView.updateForOptionTwo()
+            }
+        }
     }
+
 }
 
 
@@ -94,6 +165,7 @@ extension StatisticsViewController {
         setupDaylyPerfContentView()
         setupDailyStatisticsView()
         setupDropDownButton()
+        updateContentViewWidth()
     }
     
     private func setupScrollView() {
@@ -136,22 +208,21 @@ extension StatisticsViewController {
     }
     
     private func setupDailyStatisticsView() {
-        let barChartView = DailyStatisticsView(frame: CGRect(x: 0, y: 20, width: view.frame.width - 40, height: 280))
-        barChartView.backgroundColor = .clear
-    
-        barChartView.layer.cornerRadius = 10
         dailyPerfContentView.addSubview(barChartView)
-        
-        barChartView.taskCounts = [2, 4, 1, 5, 0, 3, 2]
     }
     
     private func setupDropDownButton() {
         contentView.addSubview(dropDownBtn)
-        
+
         NSLayoutConstraint.activate([
             dropDownBtn.topAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.topAnchor, constant: 2.5),
             dropDownBtn.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -25),
         ])
+    }
+
+    private func updateContentViewWidth() {
+        let screenWidth = UIScreen.main.bounds.width
+        contentView.widthAnchor.constraint(equalToConstant: screenWidth).isActive = true
     }
 }
 

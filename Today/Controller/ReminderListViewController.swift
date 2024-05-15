@@ -207,7 +207,7 @@ class ReminderListViewController: UIViewController {
     }
     
     @objc func statisticsController() {
-        let statisticsController = StatisticsViewController(reminder: reminderItem)
+        let statisticsController = StatisticsViewController(reminders: reminderItem)
         navigationController?.pushViewController(statisticsController, animated: true)
     }
 }
