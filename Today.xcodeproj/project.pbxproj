@@ -16,7 +16,6 @@
 		C8997E292BD8F7D100C5E01B /* EKReminder.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8997E282BD8F7D100C5E01B /* EKReminder.swift */; };
 		C8997E2B2BD9005900C5E01B /* Reminder.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8997E2A2BD9005900C5E01B /* Reminder.swift */; };
 		C8997E332BDA58BD00C5E01B /* ReminderDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8997E322BDA58BD00C5E01B /* ReminderDelegate.swift */; };
-		C8AED0F82BF3BD4B005CBEA2 /* saveStatVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8AED0F72BF3BD4B005CBEA2 /* saveStatVC.swift */; };
 		C8C7798A2BDFD16B00CC33B4 /* StatisticsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8C779892BDFD16B00CC33B4 /* StatisticsViewController.swift */; };
 		C8C7798F2BE155EB00CC33B4 /* DailyStatisticsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8C7798E2BE155EB00CC33B4 /* DailyStatisticsView.swift */; };
 		C8FCFA042BD7C0B30018BB63 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8FCFA032BD7C0B30018BB63 /* AppDelegate.swift */; };
@@ -63,7 +62,6 @@
 		C8997E282BD8F7D100C5E01B /* EKReminder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EKReminder.swift; sourceTree = "<group>"; };
 		C8997E2A2BD9005900C5E01B /* Reminder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Reminder.swift; sourceTree = "<group>"; };
 		C8997E322BDA58BD00C5E01B /* ReminderDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReminderDelegate.swift; sourceTree = "<group>"; };
-		C8AED0F72BF3BD4B005CBEA2 /* saveStatVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = saveStatVC.swift; sourceTree = "<group>"; };
 		C8C779892BDFD16B00CC33B4 /* StatisticsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatisticsViewController.swift; sourceTree = "<group>"; };
 		C8C7798E2BE155EB00CC33B4 /* DailyStatisticsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyStatisticsView.swift; sourceTree = "<group>"; };
 		C8FCFA002BD7C0B30018BB63 /* Today.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Today.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -112,13 +110,12 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		C83F1A642BDAA8F2001BBCDF /* ProgressView */ = {
+		C83F1A642BDAA8F2001BBCDF /* StatisticsProgressView */ = {
 			isa = PBXGroup;
 			children = (
-				C82942E82BD82A860004E1BC /* ProgressHeaderView.swift */,
 				C8C7798E2BE155EB00CC33B4 /* DailyStatisticsView.swift */,
 			);
-			path = ProgressView;
+			path = StatisticsProgressView;
 			sourceTree = "<group>";
 		};
 		C8FCF9F72BD7C0B30018BB63 = {
@@ -198,7 +195,6 @@
 				C8997E262BD8F41700C5E01B /* ReminderViewController.swift */,
 				C8FCFA352BD7C15E0018BB63 /* EditorViewController.swift */,
 				C8C779892BDFD16B00CC33B4 /* StatisticsViewController.swift */,
-				C8AED0F72BF3BD4B005CBEA2 /* saveStatVC.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -218,7 +214,8 @@
 		C8FCFA3B2BD7CD170018BB63 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				C83F1A642BDAA8F2001BBCDF /* ProgressView */,
+				C82942E82BD82A860004E1BC /* ProgressHeaderView.swift */,
+				C83F1A642BDAA8F2001BBCDF /* StatisticsProgressView */,
 				C8FCFA402BD7CD970018BB63 /* UITableViewCell */,
 			);
 			path = View;
@@ -380,7 +377,6 @@
 				C82942E52BD822130004E1BC /* ReminderListStyle.swift in Sources */,
 				C8FCFA492BD7D31E0018BB63 /* Date+Today.swift in Sources */,
 				C8FCFA082BD7C0B30018BB63 /* ReminderListViewController.swift in Sources */,
-				C8AED0F82BF3BD4B005CBEA2 /* saveStatVC.swift in Sources */,
 				C8FCFA3A2BD7CCFE0018BB63 /* Remidner.swift in Sources */,
 				C8C7798A2BDFD16B00CC33B4 /* StatisticsViewController.swift in Sources */,
 				C8FCFA042BD7C0B30018BB63 /* AppDelegate.swift in Sources */,
