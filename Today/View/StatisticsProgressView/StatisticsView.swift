@@ -1,13 +1,14 @@
+
 import UIKit
 
-class StatisticsViewController: UIViewController {
+class StatisticsView: UIView {
     
     // MARK: - Variables
     private var reminders: [Reminder] = []
     private var currentRegion: Locale
     
+    
     // MARK: - UI Components
-    private let scrollView = scrollView()
     private let contentScrollView = contentView()
     private let titleDailyLabel = titleLabel()
     private let dailyTaskContentView = contentView()
@@ -15,23 +16,18 @@ class StatisticsViewController: UIViewController {
     private let noTaskMessage = noTasksLabel()
     private lazy var changeDailyGraph = optionButton()
     
+    
     // MARK: - LifeCycle
     init(reminders: [Reminder], region: Locale = Locale.current) {
         self.reminders = reminders
         self.currentRegion = region
-        super.init(nibName: nil, bundle: nil)
+        super.init(frame: .zero)
+        setupUI()
+        updateUI()
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
-    }
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        title = "Progress View"
-        view.backgroundColor = .backPrimary
-        setupUI()
-        updateUI()
     }
     
     // MARK: - Selectors
@@ -135,33 +131,23 @@ class StatisticsViewController: UIViewController {
 }
 
 
-// MARK: Setup Constrain
-extension StatisticsViewController {
+// MARK: - Setup Constrain
+extension StatisticsView {
     private func setupUI() {
-        setupScrollView()
+        addSubview(contentScrollView)
+        
+        NSLayoutConstraint.activate([
+            contentScrollView.topAnchor.constraint(equalTo: topAnchor),
+            contentScrollView.leadingAnchor.constraint(equalTo: leadingAnchor),
+            contentScrollView.trailingAnchor.constraint(equalTo: trailingAnchor),
+            contentScrollView.bottomAnchor.constraint(equalTo: bottomAnchor),
+            contentScrollView.heightAnchor.constraint(equalToConstant: 600)
+        ])
+        
         setupTitleDailyView()
         setupDailyTaskContentView()
         setupBarGraphView()
         setupChangeDailyGraph()
-    }
-    
-    private func setupScrollView() {
-        view.addSubview(scrollView)
-        scrollView.addSubview(contentScrollView)
-        
-        NSLayoutConstraint.activate([
-            scrollView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
-            scrollView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
-            scrollView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
-            scrollView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
-            
-            contentScrollView.topAnchor.constraint(equalTo: scrollView.topAnchor),
-            contentScrollView.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor),
-            contentScrollView.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor),
-            contentScrollView.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor),
-            contentScrollView.heightAnchor.constraint(equalToConstant: 600),
-            contentScrollView.widthAnchor.constraint(equalTo: scrollView.widthAnchor)
-        ])
     }
     
     private func setupTitleDailyView() {
@@ -217,9 +203,8 @@ extension StatisticsViewController {
     }
 }
 
-
 // MARK: - Make UI
-extension StatisticsViewController {
+extension StatisticsView {
     private static func scrollView() -> UIScrollView {
         let view = UIScrollView()
         view.translatesAutoresizingMaskIntoConstraints = false
