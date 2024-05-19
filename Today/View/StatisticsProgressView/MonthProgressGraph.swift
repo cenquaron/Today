@@ -39,17 +39,15 @@ class MonthProgressView: UIView {
         let calendar = Calendar.current
         var completedTasksPerMonth: [String: Int] = [:]
         
-        // Инициализация месяцев
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "MMM"
         
-        for i in 0..<10 {
+        for i in 0..<12 {
             let monthDate = calendar.date(byAdding: .month, value: i, to: Date())!
             let monthName = dateFormatter.string(from: monthDate).uppercased()
             completedTasksPerMonth[monthName] = 0
         }
         
-        // Подсчет выполненных задач по месяцам
         for reminder in reminders {
             if reminder.isComplete {
                 let monthName = dateFormatter.string(from: reminder.dueDate).uppercased()
@@ -59,7 +57,6 @@ class MonthProgressView: UIView {
             }
         }
         
-        // Преобразование данных для MonthProgressView
         let sortedMonths = completedTasksPerMonth.keys.sorted(by: { dateFormatter.date(from: $0)! < dateFormatter.date(from: $1)! })
         self.months = sortedMonths
         self.dataPoints = sortedMonths.map { CGFloat(completedTasksPerMonth[$0] ?? 0) }
@@ -70,7 +67,6 @@ class MonthProgressView: UIView {
     override func draw(_ rect: CGRect) {
         guard dataPoints.count == months.count else { return }
         
-        // Удаление существующих меток
         subviews.forEach { $0.removeFromSuperview() }
         
         let margin: CGFloat = 40
@@ -104,7 +100,6 @@ class MonthProgressView: UIView {
         UIColor.blue.setFill()
         circlePath.fill()
         
-        // Рисуем метки оси X (месяцы)
         for (index, month) in months.enumerated() {
             let x = margin + CGFloat(index) * spacing
             let label = UILabel(frame: CGRect(x: x - 15, y: rect.height - margin + 5, width: 30, height: 20))
@@ -114,7 +109,6 @@ class MonthProgressView: UIView {
             addSubview(label)
         }
         
-        // Рисуем метки оси Y и линии сетки (количество задач)
         let yAxisLabelCount = 6
         for i in 0..<yAxisLabelCount {
             let y = rect.height - margin - (CGFloat(i) * (rect.height - 2 * margin) / CGFloat(yAxisLabelCount - 1))
@@ -134,7 +128,6 @@ class MonthProgressView: UIView {
             gridLine.stroke()
         }
         
-        // Рисуем рамку вокруг области графика
         let borderPath = UIBezierPath(rect: CGRect(x: margin, y: chartMargin, width: rect.width - 2 * margin, height: rect.height - margin - chartMargin))
         UIColor.orange.setStroke()
         borderPath.lineWidth = 1

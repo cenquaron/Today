@@ -29,7 +29,7 @@ class MonthStatisticsView: UIView {
     
     //MARK: - Selectors
     private func updateUI() {
-        monthView.backgroundColor = .white
+        monthView.backgroundColor = .todayListCellBackground
     }
 }
 
@@ -58,7 +58,7 @@ extension MonthStatisticsView {
         contentView.addSubview(titleMonthLabel)
         
         NSLayoutConstraint.activate([
-            titleMonthLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 10),
+            titleMonthLabel.topAnchor.constraint(equalTo: topAnchor, constant: 10),
             titleMonthLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 30)
         ])
     }
@@ -70,9 +70,9 @@ extension MonthStatisticsView {
         
         NSLayoutConstraint.activate([
             monthView.topAnchor.constraint(equalTo: titleMonthLabel.bottomAnchor, constant: 10),
-            monthView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
-            monthView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
-            monthView.heightAnchor.constraint(equalToConstant: 300)
+            monthView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20),
+            monthView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -20),
+            monthView.heightAnchor.constraint(equalToConstant: 330)
         ])
     }
 }
@@ -92,7 +92,7 @@ extension MonthStatisticsView {
         label.translatesAutoresizingMaskIntoConstraints = false
         label.font = .body
         label.textColor = .labelPrimary
-        label.text = "Month Performance".uppercased()
+        label.text = "Year Performance".uppercased()
         return label
     }
 }

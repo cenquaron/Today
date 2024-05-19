@@ -13,6 +13,7 @@ class StatisticsViewController: UIViewController {
     private var dailyProgressView: DailyStatisticsView!
     private var monthProgressView: MonthStatisticsView!
     
+    
     //MARK: - LifeCycle
     init(reminders: [Reminder], region: Locale = Locale.current) {
         self.reminders = reminders
@@ -78,7 +79,7 @@ extension StatisticsViewController {
         monthProgressView.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
-            monthProgressView.topAnchor.constraint(equalTo: dailyProgressView.bottomAnchor, constant: 50),
+            monthProgressView.topAnchor.constraint(equalTo: dailyProgressView.bottomAnchor, constant: 30),
             monthProgressView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
             monthProgressView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
             monthProgressView.heightAnchor.constraint(equalToConstant: 400)
@@ -101,7 +102,7 @@ extension StatisticsViewController {
     private static func contentView() -> UIView {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
-        view.heightAnchor.constraint(equalToConstant: 1200).isActive = true
+        view.heightAnchor.constraint(equalToConstant: 840).isActive = true
         view.backgroundColor = .backPrimary
         return view
     }

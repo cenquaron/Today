@@ -29,6 +29,7 @@ class DailyStatisticsView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
+    
     // MARK: - Selectors
     private func updateUI() {
         dailyView.backgroundColor = .todayListCellBackground

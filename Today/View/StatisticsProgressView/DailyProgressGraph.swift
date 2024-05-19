@@ -10,10 +10,12 @@ class DailyProgressView: UIView {
     }
     var days: [String] = ["S", "M", "T", "W", "T", "F", "S"]
     
+    
     //MARK: - UI Components
     private var bars: [UIView] = []
     private var labels: [UILabel] = []
     private var taskCountLabels: [UILabel] = []
+    
     
     //MARK: - LifeCycle
     override init(frame: CGRect) {
