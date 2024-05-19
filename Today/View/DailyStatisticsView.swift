@@ -1,7 +1,6 @@
-
 import UIKit
 
-class StatisticsView: UIView {
+class DailyStatisticsView: UIView {
     
     // MARK: - Variables
     private var reminders: [Reminder] = []
@@ -9,10 +8,10 @@ class StatisticsView: UIView {
     
     
     // MARK: - UI Components
-    private let contentScrollView = contentView()
+    private let contentView = contentView()
     private let titleDailyLabel = titleLabel()
     private let dailyTaskContentView = contentView()
-    private let graphView = DailyProgressBarGraphView()
+    private let dailyView = DailyProgressView()
     private let noTaskMessage = noTasksLabel()
     private lazy var changeDailyGraph = optionButton()
     
@@ -32,14 +31,14 @@ class StatisticsView: UIView {
     
     // MARK: - Selectors
     private func updateUI() {
-        graphView.backgroundColor = .todayListCellBackground
+        dailyView.backgroundColor = .todayListCellBackground
         let last10Days = changeDailyGraph.currentTitle == "last 10 day >".uppercased()
         let dailyActivities = calculateDailyActivities(from: reminders, last10Days: last10Days)
         
         if dailyActivities.isEmpty || dailyActivities.allSatisfy({ $0 == 0 }) {
             setupNoTaskMessage()
         } else {
-            graphView.progress = dailyActivities
+            dailyView.progress = dailyActivities
         }
     }
 
@@ -132,53 +131,56 @@ class StatisticsView: UIView {
 
 
 // MARK: - Setup Constrain
-extension StatisticsView {
+extension DailyStatisticsView {
     private func setupUI() {
-        addSubview(contentScrollView)
-        
-        NSLayoutConstraint.activate([
-            contentScrollView.topAnchor.constraint(equalTo: topAnchor),
-            contentScrollView.leadingAnchor.constraint(equalTo: leadingAnchor),
-            contentScrollView.trailingAnchor.constraint(equalTo: trailingAnchor),
-            contentScrollView.bottomAnchor.constraint(equalTo: bottomAnchor),
-            contentScrollView.heightAnchor.constraint(equalToConstant: 600)
-        ])
-        
+        setupContentView()
         setupTitleDailyView()
         setupDailyTaskContentView()
         setupBarGraphView()
         setupChangeDailyGraph()
     }
     
-    private func setupTitleDailyView() {
-        contentScrollView.addSubview(titleDailyLabel)
+    private func setupContentView() {
+        addSubview(contentView)
         
         NSLayoutConstraint.activate([
-            titleDailyLabel.topAnchor.constraint(equalTo: contentScrollView.topAnchor, constant: 10),
-            titleDailyLabel.leadingAnchor.constraint(equalTo: contentScrollView.leadingAnchor, constant: 30)
+            contentView.topAnchor.constraint(equalTo: topAnchor),
+            contentView.leadingAnchor.constraint(equalTo: leadingAnchor),
+            contentView.trailingAnchor.constraint(equalTo: trailingAnchor),
+            contentView.bottomAnchor.constraint(equalTo: bottomAnchor),
+            contentView.heightAnchor.constraint(equalToConstant: 600)
+        ])
+    }
+    
+    private func setupTitleDailyView() {
+        contentView.addSubview(titleDailyLabel)
+        
+        NSLayoutConstraint.activate([
+            titleDailyLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 10),
+            titleDailyLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 30)
         ])
     }
     
     private func setupDailyTaskContentView() {
-        contentScrollView.addSubview(dailyTaskContentView)
+        contentView.addSubview(dailyTaskContentView)
         
         NSLayoutConstraint.activate([
             dailyTaskContentView.topAnchor.constraint(equalTo: titleDailyLabel.bottomAnchor, constant: 10),
-            dailyTaskContentView.leadingAnchor.constraint(equalTo: contentScrollView.leadingAnchor, constant: 20),
-            dailyTaskContentView.trailingAnchor.constraint(equalTo: contentScrollView.trailingAnchor, constant: -20),
+            dailyTaskContentView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20),
+            dailyTaskContentView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -20),
             dailyTaskContentView.heightAnchor.constraint(equalToConstant: 330)
         ])
     }
     
     private func setupBarGraphView() {
-        dailyTaskContentView.addSubview(graphView)
-        graphView.translatesAutoresizingMaskIntoConstraints = false
+        dailyTaskContentView.addSubview(dailyView)
+        dailyView.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
-            graphView.topAnchor.constraint(equalTo: dailyTaskContentView.topAnchor),
-            graphView.leadingAnchor.constraint(equalTo: dailyTaskContentView.leadingAnchor),
-            graphView.trailingAnchor.constraint(equalTo: dailyTaskContentView.trailingAnchor),
-            graphView.bottomAnchor.constraint(equalTo: dailyTaskContentView.bottomAnchor)
+            dailyView.topAnchor.constraint(equalTo: dailyTaskContentView.topAnchor),
+            dailyView.leadingAnchor.constraint(equalTo: dailyTaskContentView.leadingAnchor),
+            dailyView.trailingAnchor.constraint(equalTo: dailyTaskContentView.trailingAnchor),
+            dailyView.bottomAnchor.constraint(equalTo: dailyTaskContentView.bottomAnchor)
         ])
     }
     
@@ -194,26 +196,18 @@ extension StatisticsView {
     }
     
     private func setupChangeDailyGraph() {
-        contentScrollView.addSubview(changeDailyGraph)
+        contentView.addSubview(changeDailyGraph)
         
         NSLayoutConstraint.activate([
             changeDailyGraph.topAnchor.constraint(equalTo: titleDailyLabel.topAnchor, constant: -6.5),
-            changeDailyGraph.trailingAnchor.constraint(equalTo: contentScrollView.trailingAnchor, constant: -30)
+            changeDailyGraph.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -30)
         ])
     }
 }
 
+
 // MARK: - Make UI
-extension StatisticsView {
-    private static func scrollView() -> UIScrollView {
-        let view = UIScrollView()
-        view.translatesAutoresizingMaskIntoConstraints = false
-        view.showsVerticalScrollIndicator = true
-        view.alwaysBounceVertical = true
-        view.backgroundColor = .backPrimary
-        return view
-    }
-    
+extension DailyStatisticsView {
     private static func contentView() -> UIView {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
@@ -226,7 +220,7 @@ extension StatisticsView {
         label.translatesAutoresizingMaskIntoConstraints = false
         label.font = .body
         label.textColor = .labelPrimary
-        label.text = "daily perfomatse".uppercased()
+        label.text = "daily performance".uppercased()
         return label
     }
     

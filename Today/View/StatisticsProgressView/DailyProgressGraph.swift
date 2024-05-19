@@ -1,6 +1,6 @@
 import UIKit
 
-class DailyProgressBarGraphView: UIView {
+class DailyProgressView: UIView {
     
     //MARK: - Variables
     var progress: [CGFloat] = [] {
@@ -84,7 +84,7 @@ class DailyProgressBarGraphView: UIView {
 
 
 //MARK: - Make UI
-extension DailyProgressBarGraphView {
+extension DailyProgressView {
     private func createBarView() -> UIView {
         let barView = UIView()
         barView.translatesAutoresizingMaskIntoConstraints = false
