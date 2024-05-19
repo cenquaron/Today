@@ -162,15 +162,6 @@ class ReminderListViewController: UIViewController {
         let navigationController = UINavigationController(rootViewController: editorViewController)
         present(navigationController, animated: true)
     }
-
-    
-//    private func refreshBackground() {
-//        tableView.backgroundView = nil
-//        let backgroundView = UIView()
-//        let gradientLayer = CAGradientLayer.gradientLayer(for: listStyle, in: view.frame)
-//        backgroundView.layer.addSublayer(gradientLayer)
-//        tableView.backgroundView = backgroundView
-//    }
     
     private func showError(_ error: Error) {
         let alertTitle = NSLocalizedString("Error", comment: "Error alert title")
@@ -207,7 +198,7 @@ class ReminderListViewController: UIViewController {
     }
     
     @objc func statisticsController() {
-        let statisticsController = StatisticsViewController(reminder: reminderItem)
+        let statisticsController = StatisticsViewController(reminders: reminderItem)
         navigationController?.pushViewController(statisticsController, animated: true)
     }
 }

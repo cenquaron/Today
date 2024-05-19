@@ -3,22 +3,21 @@ import UIKit
 class StatisticsViewController: UIViewController {
     
     //MARK: - Variables
-    private var reminder: [Reminder] = []
-    private let dropDownOptions = ["Option 1", "Option 2", "Option 3"]
+    private var reminders: [Reminder] = []
+    private var currentRegion: Locale
     
     
     //MARK: - UI Components
     private let scrollView = scrollView()
     private let contentView = contentView()
-    private let dailyPerfContentView = contentView()
-    private let titleLabel = labelText()
-    private lazy var dropDownBtn = dropDownButton()
-    var dropDownStackView: UIStackView?
-
+    private var dailyProgressView: DailyStatisticsView!
+    private var monthProgressView: MonthStatisticsView!
+    
     
     //MARK: - LifeCycle
-    init(reminder: [Reminder]) {
-        self.reminder = reminder
+    init(reminders: [Reminder], region: Locale = Locale.current) {
+        self.reminders = reminders
+        self.currentRegion = region
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -28,75 +27,24 @@ class StatisticsViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        title = "Progress View"
         view.backgroundColor = .backPrimary
-        updateUI()
+        dailyProgressView = DailyStatisticsView(reminders: reminders, region: currentRegion)
+        monthProgressView = MonthStatisticsView(reminders: reminders)
         setupUI()
     }
-    
-    
-    //MARK: - Selectors
-    private func updateUI() {
-        titleLabel.text = "daily perfomance".uppercased()
-        dropDownBtn.addTarget(self, action: #selector(didTapDropDownButton), for: .touchUpInside)
-        
-        dailyPerfContentView.backgroundColor = .backPrimary
-        dailyPerfContentView.layer.cornerRadius = 10
-        dailyPerfContentView.backgroundColor = .todayListCellBackground
-    }
-    
-    func createDropDownMenu() {
-        dropDownStackView = UIStackView()
-        dropDownStackView?.axis = .vertical
-        dropDownStackView?.alignment = .fill
-        dropDownStackView?.distribution = .fillEqually
-        dropDownStackView?.spacing = 5
-        dropDownStackView?.translatesAutoresizingMaskIntoConstraints = false
-        dropDownStackView?.backgroundColor = .backTh
-
-        
-        for option in dropDownOptions {
-            let optionButton = UIButton()
-            optionButton.setTitle(option, for: .normal)
-            optionButton.setTitleColor(.black, for: .normal)
-            optionButton.addTarget(self, action: #selector(didSelectOption(_:)), for: .touchUpInside)
-            dropDownStackView?.addArrangedSubview(optionButton)
-        }
-        
-        view.addSubview(dropDownStackView!)
-
-        NSLayoutConstraint.activate([
-            dropDownStackView!.topAnchor.constraint(equalTo: dropDownBtn.bottomAnchor, constant: 5),
-            dropDownStackView!.leadingAnchor.constraint(equalTo: dropDownBtn.leadingAnchor, constant: -10),
-            dropDownStackView!.trailingAnchor.constraint(equalTo: dropDownBtn.trailingAnchor, constant: 10)
-        ])
-    }
-    
-    @objc func didTapDropDownButton() {
-        if dropDownStackView == nil {
-            createDropDownMenu()
-        } else {
-            dropDownStackView?.isHidden = !dropDownStackView!.isHidden
-        }
-    }
-    
-    @objc func didSelectOption(_ sender: UIButton) {
-        dropDownBtn.setTitle(sender.currentTitle, for: .normal)
-        dropDownStackView?.isHidden = true
-    }
 }
-
-
-//MARK: Setup Constrain
+    
+    
+//MARK: - Setup Constrain
 extension StatisticsViewController {
     private func setupUI() {
-        setupScrollView()
-        setupTitleLabel()
-        setupDaylyPerfContentView()
-        setupDailyStatisticsView()
-        setupDropDownButton()
+        setupContentScrollView()
+        setupDailyProgressView()
+        setupMonthProgressView()
     }
     
-    private func setupScrollView() {
+    private func setupContentScrollView() {
         view.addSubview(scrollView)
         scrollView.addSubview(contentView)
         
@@ -110,47 +58,31 @@ extension StatisticsViewController {
             contentView.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor),
             contentView.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor),
             contentView.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor),
-            contentView.heightAnchor.constraint(equalToConstant: 800),
             contentView.widthAnchor.constraint(equalTo: scrollView.widthAnchor)
         ])
     }
     
-    private func setupTitleLabel() {
-        contentView.addSubview(titleLabel)
+    private func setupDailyProgressView() {
+        contentView.addSubview(dailyProgressView)
+        dailyProgressView.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
-            titleLabel.topAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.topAnchor, constant: 10),
-            titleLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 25)
+            dailyProgressView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 10),
+            dailyProgressView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
+            dailyProgressView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
+            dailyProgressView.heightAnchor.constraint(equalToConstant: 400)
         ])
     }
     
-    private func setupDaylyPerfContentView() {
-        contentView.addSubview(dailyPerfContentView)
+    private func setupMonthProgressView() {
+        contentView.addSubview(monthProgressView)
+        monthProgressView.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
-            dailyPerfContentView.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 20),
-            dailyPerfContentView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20),
-            dailyPerfContentView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -20),
-            dailyPerfContentView.heightAnchor.constraint(equalToConstant: 330)
-        ])
-    }
-    
-    private func setupDailyStatisticsView() {
-        let barChartView = DailyStatisticsView(frame: CGRect(x: 0, y: 20, width: view.frame.width - 40, height: 280))
-        barChartView.backgroundColor = .clear
-    
-        barChartView.layer.cornerRadius = 10
-        dailyPerfContentView.addSubview(barChartView)
-        
-        barChartView.taskCounts = [2, 4, 1, 5, 0, 3, 2]
-    }
-    
-    private func setupDropDownButton() {
-        contentView.addSubview(dropDownBtn)
-        
-        NSLayoutConstraint.activate([
-            dropDownBtn.topAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.topAnchor, constant: 2.5),
-            dropDownBtn.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -25),
+            monthProgressView.topAnchor.constraint(equalTo: dailyProgressView.bottomAnchor, constant: 30),
+            monthProgressView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
+            monthProgressView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
+            monthProgressView.heightAnchor.constraint(equalToConstant: 400)
         ])
     }
 }
@@ -170,33 +102,8 @@ extension StatisticsViewController {
     private static func contentView() -> UIView {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
+        view.heightAnchor.constraint(equalToConstant: 840).isActive = true
         view.backgroundColor = .backPrimary
-        return view
-    }
-    
-    private static func labelText() -> UILabel {
-        let label = UILabel()
-        label.translatesAutoresizingMaskIntoConstraints = false
-        label.font = .body
-        label.textColor = .labelPrimary
-        return label
-    }
-    
-    private func dropDownButton() -> UIButton {
-        let btn = UIButton()
-        btn.translatesAutoresizingMaskIntoConstraints = false
-        btn.setTitleColor(.labelPrimary, for: .normal)
-        btn.setTitle("Option 1", for: .normal)
-        return btn
-    }
-    
-    private func dropDownStaskView() -> UIStackView {
-        let view = UIStackView()
-        view.translatesAutoresizingMaskIntoConstraints = false
-        view.axis = .vertical
-        view.alignment = .fill
-        view.distribution = .fillEqually
-        view.spacing = 5
         return view
     }
 }

@@ -5,9 +5,11 @@ class ReminderCreationCell: UITableViewCell {
     //MARK: - Variables
     static let identifier = "ReminderCreationCell"
     
+    
     //MARK: - UI Components
     private let titleTextLabel = labelText()
     private lazy var iconImage = iconImageView()
+    
     
     //MARK: - LifeCycle
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {

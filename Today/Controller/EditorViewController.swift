@@ -101,7 +101,7 @@ class EditorViewController: UIViewController {
 }
 
 
-//MARK: Setup UI
+//MARK: Setup Constrain
 extension EditorViewController {
     private func setupUI() {
         setupContentScrollView()
@@ -290,8 +290,13 @@ extension EditorViewController {
         date.locale = Locale.current.calendar.locale
         date.widthAnchor.constraint(equalToConstant: 360).isActive = true
         date.heightAnchor.constraint(equalToConstant: 330).isActive = true
+        
+        date.accessibilityLabel = "Выбор даты"
+        date.accessibilityHint = "Выберите желаемую дату"
+        
         return date
     }
+
     
     private static func timePicker() -> UIDatePicker {
         let date = UIDatePicker()
