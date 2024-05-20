@@ -8,14 +8,23 @@ class DailyProgressView: UIView {
             setupBarsAndLabels()
         }
     }
-    var days: [String] = ["S", "M", "T", "W", "T", "F", "S"]
-    
+    var days: [String] = [] {
+        didSet {
+            setNeedsDisplay()
+        }
+    }
+    var displayLast10Days: Bool = false {
+        didSet {
+            calculateDays()
+            updateProgress()
+            setupBarsAndLabels()
+        }
+    }
     
     //MARK: - UI Components
     private var bars: [UIView] = []
     private var labels: [UILabel] = []
     private var taskCountLabels: [UILabel] = []
-    
     
     //MARK: - LifeCycle
     override init(frame: CGRect) {
@@ -24,7 +33,8 @@ class DailyProgressView: UIView {
     }
     
     required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        super.init(coder: coder)
+        backgroundColor = .clear
     }
     
     override func layoutSubviews() {
@@ -56,7 +66,6 @@ class DailyProgressView: UIView {
         }
     }
     
-    
     //MARK: - Setup Bars and Labels
     private func setupBarsAndLabels() {
         bars.forEach { $0.removeFromSuperview() }
@@ -65,8 +74,6 @@ class DailyProgressView: UIView {
         bars.removeAll()
         labels.removeAll()
         taskCountLabels.removeAll()
-        
-        days = progress.count == 10 ? ["F", "S", "S", "M", "T", "W", "T", "F", "S", "S"] : ["M", "T", "W", "T", "F", "S", "S"]
         
         for day in days {
             let bar = createBarView()
@@ -82,11 +89,35 @@ class DailyProgressView: UIView {
         
         updateBarHeightsAndLabels()
     }
-}
-
-
-//MARK: - Make UI
-extension DailyProgressView {
+    
+    private func calculateDays() {
+        let calendar = Calendar.current
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "E"
+        
+        var currentDay = Date()
+        let daysCount = displayLast10Days ? 10 : 7
+        
+        days.removeAll()
+        
+        for _ in 0..<daysCount {
+            let dayString = dateFormatter.string(from: currentDay)
+            days.append(dayString)
+            currentDay = calendar.date(byAdding: .day, value: -1, to: currentDay) ?? currentDay
+        }
+        
+        days.reverse()
+    }
+    
+    private func updateProgress() {
+        if displayLast10Days {
+            progress = Array(progress.prefix(10))
+        } else {
+            progress = Array(progress.prefix(7))
+        }
+    }
+    
+    //MARK: - Create UI Elements
     private func createBarView() -> UIView {
         let barView = UIView()
         barView.translatesAutoresizingMaskIntoConstraints = false

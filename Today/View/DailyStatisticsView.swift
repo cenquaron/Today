@@ -6,15 +6,13 @@ class DailyStatisticsView: UIView {
     private var reminders: [Reminder] = []
     private var currentRegion: Locale
     
-    
     // MARK: - UI Components
-    private let contentView = contentView()
-    private let titleDailyLabel = titleLabel()
-    private let dailyTaskContentView = contentView()
+    private let contentView = DailyStatisticsView.contentView()
+    private let titleDailyLabel = DailyStatisticsView.titleLabel()
+    private let dailyTaskContentView = DailyStatisticsView.contentView()
     private let dailyView = DailyProgressView()
-    private let noTaskMessage = noTasksLabel()
+    private let noTaskMessage = DailyStatisticsView.noTasksLabel()
     private lazy var changeDailyGraph = optionButton()
-    
     
     // MARK: - LifeCycle
     init(reminders: [Reminder], region: Locale = Locale.current) {
@@ -29,11 +27,11 @@ class DailyStatisticsView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    
     // MARK: - Selectors
     private func updateUI() {
         dailyView.backgroundColor = .todayListCellBackground
         let last10Days = changeDailyGraph.currentTitle == "last 10 day >".uppercased()
+        dailyView.displayLast10Days = last10Days
         let dailyActivities = calculateDailyActivities(from: reminders, last10Days: last10Days)
         
         if dailyActivities.isEmpty || dailyActivities.allSatisfy({ $0 == 0 }) {
@@ -42,7 +40,6 @@ class DailyStatisticsView: UIView {
             dailyView.progress = dailyActivities
         }
     }
-
 
     private func calculateDailyActivities(from reminders: [Reminder], last10Days: Bool) -> [CGFloat] {
         let (startOfRange, endOfRange) = getDateRange(last10Days: last10Days)
@@ -87,7 +84,6 @@ class DailyStatisticsView: UIView {
         return (startOfRange, endOfRange)
     }
 
-
     private func getDayIndex(for date: Date, startOfRange: Date) -> Int {
         let calendar = Calendar.current
         let components = calendar.dateComponents([.day], from: startOfRange, to: date)
@@ -99,26 +95,6 @@ class DailyStatisticsView: UIView {
         return -1
     }
     
-    private func getDayOfWeek(for date: Date, startOfWeek: Date) -> Int {
-        var calendar = Calendar.current
-        calendar.locale = currentRegion
-        let dayOffset = calendar.dateComponents([.day], from: startOfWeek, to: date).day ?? 0
-        return dayOffset
-    }
-
-    private func getWeekRange(for locale: Locale, last10Days: Bool) -> (Date, Date) {
-        var calendar = Calendar.current
-        calendar.locale = locale
-        let today = Date()
-        
-        let previousWeekStart = calendar.date(byAdding: .weekOfYear, value: -1, to: today)
-        let startOfWeek = calendar.dateInterval(of: .weekOfYear, for: previousWeekStart ?? today)?.start ?? today
-        
-        let endOfRange = calendar.date(byAdding: .day, value: last10Days ? 9 : 6, to: startOfWeek)?.addingTimeInterval(60 * 60 * 24 - 1) ?? today
-
-        return (startOfWeek, endOfRange)
-    }
-
     @objc func didTapChangeGraphView(_ sender: UIButton) {
         if sender.currentTitle == "last 7 day >".uppercased() {
             sender.setTitle("last 10 day >".uppercased(), for: .normal)
