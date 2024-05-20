@@ -6,13 +6,15 @@ class DailyStatisticsView: UIView {
     private var reminders: [Reminder] = []
     private var currentRegion: Locale
     
+    
     // MARK: - UI Components
-    private let contentView = DailyStatisticsView.contentView()
-    private let titleDailyLabel = DailyStatisticsView.titleLabel()
-    private let dailyTaskContentView = DailyStatisticsView.contentView()
+    private let contentView = contentView()
+    private let titleDailyLabel = titleLabel()
+    private let dailyTaskContentView = contentView()
     private let dailyView = DailyProgressView()
-    private let noTaskMessage = DailyStatisticsView.noTasksLabel()
+    private let noTaskMessage = noTasksLabel()
     private lazy var changeDailyGraph = optionButton()
+    
     
     // MARK: - LifeCycle
     init(reminders: [Reminder], region: Locale = Locale.current) {
@@ -27,6 +29,7 @@ class DailyStatisticsView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
+    
     // MARK: - Selectors
     private func updateUI() {
         dailyView.backgroundColor = .todayListCellBackground
@@ -35,8 +38,10 @@ class DailyStatisticsView: UIView {
         let dailyActivities = calculateDailyActivities(from: reminders, last10Days: last10Days)
         
         if dailyActivities.isEmpty || dailyActivities.allSatisfy({ $0 == 0 }) {
+            dailyView.progress = []
             setupNoTaskMessage()
         } else {
+            noTaskMessage.removeFromSuperview()
             dailyView.progress = dailyActivities
         }
     }

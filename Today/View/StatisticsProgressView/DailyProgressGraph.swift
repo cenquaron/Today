@@ -21,10 +21,12 @@ class DailyProgressView: UIView {
         }
     }
     
+    
     //MARK: - UI Components
     private var bars: [UIView] = []
     private var labels: [UILabel] = []
     private var taskCountLabels: [UILabel] = []
+    
     
     //MARK: - LifeCycle
     override init(frame: CGRect) {
@@ -43,7 +45,7 @@ class DailyProgressView: UIView {
     }
     
     private func updateBarHeightsAndLabels() {
-        guard !progress.isEmpty else { return }
+        guard !progress.isEmpty, !progress.allSatisfy({ $0 == 0 }) else { return }
         
         let barWidth = bounds.width / CGFloat(progress.count)
         let actualBarWidth = barWidth / 2
@@ -65,6 +67,8 @@ class DailyProgressView: UIView {
             }
         }
     }
+
+    
     
     //MARK: - Setup Bars and Labels
     private func setupBarsAndLabels() {
@@ -74,6 +78,8 @@ class DailyProgressView: UIView {
         bars.removeAll()
         labels.removeAll()
         taskCountLabels.removeAll()
+        
+        guard !progress.isEmpty, !progress.allSatisfy({ $0 == 0 }) else { return }
         
         for day in days {
             let bar = createBarView()
@@ -89,6 +95,7 @@ class DailyProgressView: UIView {
         
         updateBarHeightsAndLabels()
     }
+
     
     private func calculateDays() {
         let calendar = Calendar.current
@@ -116,8 +123,11 @@ class DailyProgressView: UIView {
             progress = Array(progress.prefix(7))
         }
     }
+}
     
-    //MARK: - Create UI Elements
+
+//MARK: - Make UI
+extension DailyProgressView {
     private func createBarView() -> UIView {
         let barView = UIView()
         barView.translatesAutoresizingMaskIntoConstraints = false
