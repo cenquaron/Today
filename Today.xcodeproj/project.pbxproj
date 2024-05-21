@@ -137,12 +137,12 @@
 			path = ProgressViews;
 			sourceTree = "<group>";
 		};
-		C881BA6B2BFCDCEF00300766 /* EditorViewController */ = {
+		C881BA6B2BFCDCEF00300766 /* ReminderViews */ = {
 			isa = PBXGroup;
 			children = (
 				C881BA6C2BFCDD6100300766 /* EditorViews.swift */,
 			);
-			path = EditorViewController;
+			path = ReminderViews;
 			sourceTree = "<group>";
 		};
 		C8FCF9F72BD7C0B30018BB63 = {
@@ -241,7 +241,7 @@
 		C8FCFA3B2BD7CD170018BB63 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				C881BA6B2BFCDCEF00300766 /* EditorViewController */,
+				C881BA6B2BFCDCEF00300766 /* ReminderViews */,
 				C83F1A642BDAA8F2001BBCDF /* StatisticsProgressView */,
 				C881BA6A2BFCD90900300766 /* ProgressViews */,
 				C8FCFA402BD7CD970018BB63 /* UITableViewCell */,

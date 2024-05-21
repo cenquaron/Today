@@ -1,6 +1,6 @@
 import UIKit
 
-class ReminderViewController: UIViewController {
+class ReminderView: UIViewController {
     
     //MARK: - Variable
     private var picSquareHeightConstraint: NSLayoutConstraint?
@@ -35,6 +35,7 @@ class ReminderViewController: UIViewController {
         view.backgroundColor = .backPrimary
         setupUI()
         update()
+        
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .edit, target: self, action: #selector(didTapEditButton))
     }
     
@@ -72,7 +73,7 @@ class ReminderViewController: UIViewController {
 
 
 //MARK: Setup Constrain
-extension ReminderViewController {
+extension ReminderView {
     private func setupUI() {
         setupScrollView()
         setupContentSquare()
@@ -164,7 +165,7 @@ extension ReminderViewController {
 
 
 //MARK: - Make UI
-extension ReminderViewController {
+extension ReminderView {
     private static func scrollView() -> UIScrollView {
         let view = UIScrollView()
         view.translatesAutoresizingMaskIntoConstraints = false
