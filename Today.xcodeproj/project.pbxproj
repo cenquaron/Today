@@ -14,6 +14,7 @@
 		C881BA652BFA0D7400300766 /* DailyStatisticsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C881BA642BFA0D7400300766 /* DailyStatisticsView.swift */; };
 		C881BA672BFA178900300766 /* MonthProgressGraph.swift in Sources */ = {isa = PBXBuildFile; fileRef = C881BA662BFA178900300766 /* MonthProgressGraph.swift */; };
 		C881BA692BFA17D800300766 /* MonthStatisticsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C881BA682BFA17D800300766 /* MonthStatisticsView.swift */; };
+		C881BA6D2BFCDD6200300766 /* EditorViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = C881BA6C2BFCDD6100300766 /* EditorViews.swift */; };
 		C8997E252BD848E200C5E01B /* CAGradientLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8997E242BD848E200C5E01B /* CAGradientLayer.swift */; };
 		C8997E272BD8F41700C5E01B /* ReminderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8997E262BD8F41700C5E01B /* ReminderViewController.swift */; };
 		C8997E292BD8F7D100C5E01B /* EKReminder.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8997E282BD8F7D100C5E01B /* EKReminder.swift */; };
@@ -63,6 +64,7 @@
 		C881BA642BFA0D7400300766 /* DailyStatisticsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyStatisticsView.swift; sourceTree = "<group>"; };
 		C881BA662BFA178900300766 /* MonthProgressGraph.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonthProgressGraph.swift; sourceTree = "<group>"; };
 		C881BA682BFA17D800300766 /* MonthStatisticsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonthStatisticsView.swift; sourceTree = "<group>"; };
+		C881BA6C2BFCDD6100300766 /* EditorViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditorViews.swift; sourceTree = "<group>"; };
 		C8997E242BD848E200C5E01B /* CAGradientLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CAGradientLayer.swift; sourceTree = "<group>"; };
 		C8997E262BD8F41700C5E01B /* ReminderViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReminderViewController.swift; sourceTree = "<group>"; };
 		C8997E282BD8F7D100C5E01B /* EKReminder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EKReminder.swift; sourceTree = "<group>"; };
@@ -119,10 +121,28 @@
 		C83F1A642BDAA8F2001BBCDF /* StatisticsProgressView */ = {
 			isa = PBXGroup;
 			children = (
+				C881BA642BFA0D7400300766 /* DailyStatisticsView.swift */,
+				C881BA682BFA17D800300766 /* MonthStatisticsView.swift */,
+			);
+			path = StatisticsProgressView;
+			sourceTree = "<group>";
+		};
+		C881BA6A2BFCD90900300766 /* ProgressViews */ = {
+			isa = PBXGroup;
+			children = (
+				C82942E82BD82A860004E1BC /* ProgressHeaderView.swift */,
 				C8C7798E2BE155EB00CC33B4 /* DailyProgressGraph.swift */,
 				C881BA662BFA178900300766 /* MonthProgressGraph.swift */,
 			);
-			path = StatisticsProgressView;
+			path = ProgressViews;
+			sourceTree = "<group>";
+		};
+		C881BA6B2BFCDCEF00300766 /* EditorViewController */ = {
+			isa = PBXGroup;
+			children = (
+				C881BA6C2BFCDD6100300766 /* EditorViews.swift */,
+			);
+			path = EditorViewController;
 			sourceTree = "<group>";
 		};
 		C8FCF9F72BD7C0B30018BB63 = {
@@ -221,10 +241,9 @@
 		C8FCFA3B2BD7CD170018BB63 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				C82942E82BD82A860004E1BC /* ProgressHeaderView.swift */,
-				C881BA642BFA0D7400300766 /* DailyStatisticsView.swift */,
-				C881BA682BFA17D800300766 /* MonthStatisticsView.swift */,
+				C881BA6B2BFCDCEF00300766 /* EditorViewController */,
 				C83F1A642BDAA8F2001BBCDF /* StatisticsProgressView */,
+				C881BA6A2BFCD90900300766 /* ProgressViews */,
 				C8FCFA402BD7CD970018BB63 /* UITableViewCell */,
 			);
 			path = View;
@@ -401,6 +420,7 @@
 				C8FCFA472BD7D2F90018BB63 /* UIView.swift in Sources */,
 				C8997E292BD8F7D100C5E01B /* EKReminder.swift in Sources */,
 				C8997E2B2BD9005900C5E01B /* Reminder.swift in Sources */,
+				C881BA6D2BFCDD6200300766 /* EditorViews.swift in Sources */,
 				C881BA672BFA178900300766 /* MonthProgressGraph.swift in Sources */,
 				C881BA652BFA0D7400300766 /* DailyStatisticsView.swift in Sources */,
 				C82942E12BD821BB0004E1BC /* ReminderStore.swift in Sources */,

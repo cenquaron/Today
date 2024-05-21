@@ -62,7 +62,9 @@ extension ReminderCreationCell {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.text = "Create Task" //Accesebility
-        label.font = .systemFont(ofSize: 16)
+        label.font = UIFont.preferredFont(forTextStyle: .body)
+        label.adjustsFontForContentSizeCategory = true
+
         label.textColor = .labelTertiary
         return label
     }

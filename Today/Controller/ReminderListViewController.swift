@@ -24,10 +24,8 @@ class ReminderListViewController: UIViewController {
         view.register(ReminderItemListCell.self, forCellReuseIdentifier: ReminderItemListCell.identifier)
         view.register(ReminderCreationCell.self, forCellReuseIdentifier: ReminderCreationCell.identifier)
         view.backgroundColor = .clear
-        view.estimatedRowHeight = 98
         view.separatorInset = UIEdgeInsets(top: 0.0, left: 52, bottom: 0.0, right: 0)
         view.showsVerticalScrollIndicator = false
-        view.rowHeight = UITableView.automaticDimension
         return view
     }()
     
@@ -83,6 +81,8 @@ class ReminderListViewController: UIViewController {
         tableView.delegate = self
         tableView.dataSource = self
         tableView.tableHeaderView = headerView
+        tableView.estimatedRowHeight = 60
+        tableView.rowHeight = UITableView.automaticDimension
         updateProgressHeader()
         setupUI()
     }
@@ -391,7 +391,7 @@ extension ReminderListViewController: UITableViewDataSource, UITableViewDelegate
     
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 60
+        return max(60, UITableView.automaticDimension)
     }
 }
 

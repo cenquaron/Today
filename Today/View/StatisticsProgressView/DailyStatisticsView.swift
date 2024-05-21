@@ -200,7 +200,8 @@ extension DailyStatisticsView {
     private static func titleLabel() -> UILabel {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.font = .body
+        label.font = UIFont.preferredFont(forTextStyle: .body)
+        label.adjustsFontForContentSizeCategory = true
         label.textColor = .labelPrimary
         label.text = "daily performance".uppercased()
         return label
@@ -211,7 +212,7 @@ extension DailyStatisticsView {
         label.translatesAutoresizingMaskIntoConstraints = false
         label.text = "На этой неделе вы не выполнили ни одной задачи"
         label.textAlignment = .center
-        label.font = .title
+        label.font = UIFont.preferredFont(forTextStyle: .title1)
         label.textColor = .labelTertiary
         label.numberOfLines = 0
         label.lineBreakMode = .byWordWrapping
@@ -224,7 +225,8 @@ extension DailyStatisticsView {
         let btn = UIButton(type: .system)
         btn.translatesAutoresizingMaskIntoConstraints = false
         btn.setTitle("last 7 day >".uppercased(), for: .normal)
-        btn.titleLabel?.font = .body
+        btn.titleLabel?.font = UIFont.preferredFont(forTextStyle: .body)
+        btn.adjustsImageSizeForAccessibilityContentSizeCategory = true
         btn.setTitleColor(.labelPrimary, for: .normal)
         btn.addTarget(self, action: #selector(didTapChangeGraphView(_:)), for: .touchUpInside)
         return btn

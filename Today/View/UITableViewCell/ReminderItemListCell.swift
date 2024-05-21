@@ -31,19 +31,27 @@ class ReminderItemListCell: UITableViewCell {
         titleLabel.text = reminder.title
         dateLabel.text = reminder.dueDate.dayAndTimeText
         updateButton()
+        updateUI()
     }
     
     
     //MARK: - Selectors
-    @objc func didTapCompleteButton() {
-        reminder.isComplete.toggle()
-        updateButton()
-        delegate?.didTapDoneButton(for: reminder)
+    private func updateUI() {
+        titleLabel.adjustsFontForContentSizeCategory = true
+        titleLabel.font = UIFont.preferredFont(forTextStyle: .body)
+        dateLabel.adjustsFontForContentSizeCategory = true
+        dateLabel.font =  UIFont.preferredFont(forTextStyle: .footnote)
     }
     
     func updateButton() {
         let imageName = reminder!.isComplete ? "checked" : "unchecked"
         doneButton.setImage(UIImage(named: imageName), for: .normal)
+    }
+    
+    @objc func didTapCompleteButton() {
+        reminder.isComplete.toggle()
+        updateButton()
+        delegate?.didTapDoneButton(for: reminder)
     }
 }
 
@@ -71,10 +79,9 @@ extension ReminderItemListCell {
         contentView.addSubview(infoStackView)
         infoStackView.addArrangedSubview(titleLabel)
         infoStackView.addArrangedSubview(dateLabel)
-        dateLabel.font = .body2
         
         NSLayoutConstraint.activate([
-            infoStackView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 10),
+            infoStackView.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
             infoStackView.leadingAnchor.constraint(equalTo: doneButton.trailingAnchor, constant: 12),
             infoStackView.trailingAnchor.constraint(equalTo: markMore.trailingAnchor, constant: -16),
         ])
@@ -105,7 +112,6 @@ extension ReminderItemListCell {
     private static func labelText() -> UILabel {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.font = .systemFont(ofSize: 16)
         label.textColor = .labelPrimary
         return label
     }
@@ -122,6 +128,7 @@ extension ReminderItemListCell {
     private static func markMoreImage() -> UIImageView {
         let view = UIImageView()
         view.translatesAutoresizingMaskIntoConstraints = false
+        view.adjustsImageSizeForAccessibilityContentSizeCategory = true
         view.image = UIImage(named: "seeMore")
         return view
     }

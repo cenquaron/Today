@@ -90,7 +90,8 @@ extension MonthStatisticsView {
     private static func titleLabel() -> UILabel {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.font = .body
+        label.font = UIFont.preferredFont(forTextStyle: .body)
+        label.adjustsFontForContentSizeCategory = true
         label.textColor = .labelPrimary
         label.text = "Year Performance".uppercased()
         return label

@@ -57,7 +57,7 @@ class ReminderViewController: UIViewController {
     
     private func update() {
         titleLabels.text = reminder.title
-        titleLabels.font = .systemFont(ofSize: 22, weight: .bold)
+        titleLabels.font = UIFont.preferredFont(forTextStyle: .title1)
         
         dateLabel.text = reminder.dueDate.dayText
         dateTimeLabel.text = reminder.dueDate.formatted(date: .omitted, time: .shortened)
@@ -178,7 +178,8 @@ extension ReminderViewController {
     private static func labelText() -> UILabel {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.font = .body
+        label.font =  UIFont.preferredFont(forTextStyle: .subheadline)
+        label.adjustsFontForContentSizeCategory = true
         label.textColor = .labelPrimary
         return label
     }
@@ -188,6 +189,7 @@ extension ReminderViewController {
         view.translatesAutoresizingMaskIntoConstraints = false
         view.widthAnchor.constraint(equalToConstant: 25).isActive = true
         view.heightAnchor.constraint(equalToConstant: 25).isActive = true
+        view.adjustsImageSizeForAccessibilityContentSizeCategory = true
         return view
     }
     

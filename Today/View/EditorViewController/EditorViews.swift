@@ -1,6 +1,6 @@
 import UIKit
 
-class EditorViewController: UIViewController {
+class EditorView: UIViewController {
     
     //MARK: - Variables
     weak var delegate: ReminderUpdateDelegate?
@@ -102,7 +102,7 @@ class EditorViewController: UIViewController {
 
 
 //MARK: Setup Constrain
-extension EditorViewController {
+extension EditorView {
     private func setupUI() {
         setupContentScrollView()
         setupTitleStack()
@@ -188,53 +188,8 @@ extension EditorViewController {
 }
 
 
-//MARK: Keyboard Settings
-extension EditorViewController: UITextFieldDelegate {
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        textField.resignFirstResponder()
-        return true
-    }
-    
-    @objc private func keyboardWillShow(_ notification: Notification) {
-        guard let userInfo = notification.userInfo,
-              let keyboardFrame = userInfo[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect,
-              let _ = userInfo[UIResponder.keyboardAnimationDurationUserInfoKey] as? TimeInterval else {
-            return
-        }
-        
-        let keyboardHeight = keyboardFrame.height
-        let contentInsets = UIEdgeInsets(top: 0.0, left: 0.0, bottom: keyboardHeight, right: 0.0)
-        scrollView.contentInset = contentInsets
-        scrollView.scrollIndicatorInsets = contentInsets
-        
-        if let activeField = findFirstResponder(view: view) {
-            var visibleRect = scrollView.frame
-            visibleRect.size.height -= keyboardHeight
-            
-            let activeFieldRect = activeField.convert(activeField.bounds, to: scrollView)
-            
-            if !visibleRect.contains(activeFieldRect.origin) {
-                scrollView.scrollRectToVisible(activeFieldRect, animated: true)
-            }
-        }
-    }
-    
-    private func findFirstResponder(view: UIView) -> UIView? {
-        if view.isFirstResponder {
-            return view
-        }
-        for subview in view.subviews {
-            if let firstResponder = findFirstResponder(view: subview) {
-                return firstResponder
-            }
-        }
-        return nil
-    }
-}
-
-
 //MARK: - Make UI
-extension EditorViewController {
+extension EditorView {
     private static func contentView() -> UIView {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
