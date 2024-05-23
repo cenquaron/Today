@@ -1,5 +1,6 @@
 import UIKit
 import EventKit
+import QuartzCore
 
 class ReminderListViewController: UIViewController {
     
@@ -214,6 +215,9 @@ extension ReminderListViewController: UITableViewDataSource, UITableViewDelegate
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if indexPath.row == filterReminder.count {
             let cell = tableView.dequeueReusableCell(withIdentifier: ReminderCreationCell.identifier, for: indexPath) as! ReminderCreationCell
+            cell.layer.cornerRadius = 10
+            cell.layer.maskedCorners = [.layerMaxXMaxYCorner, .layerMinXMaxYCorner]
+            cell.clipsToBounds = true
             return cell
         } else {
             let cell = tableView.dequeueReusableCell(withIdentifier: ReminderItemListCell.identifier, for: indexPath) as! ReminderItemListCell
@@ -221,6 +225,15 @@ extension ReminderListViewController: UITableViewDataSource, UITableViewDelegate
             cell.configure(with: item)
             cell.delegate = self
             cell.selectionStyle = .none
+            
+            if indexPath.row == 0 {
+                cell.layer.cornerRadius = 10
+                cell.layer.maskedCorners = [.layerMaxXMinYCorner, .layerMinXMinYCorner]
+                cell.clipsToBounds = true
+            } else {
+                cell.layer.cornerRadius = 0
+                cell.clipsToBounds = false
+            }
             
             return cell
         }
