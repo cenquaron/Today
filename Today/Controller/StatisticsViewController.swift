@@ -27,7 +27,7 @@ class StatisticsViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        title = "Progress View"
+        title = "progressViewTitle".localizable
         view.backgroundColor = .backPrimary
         dailyProgressView = DailyStatisticsView(reminders: reminders, region: currentRegion)
         monthProgressView = MonthStatisticsView(reminders: reminders)

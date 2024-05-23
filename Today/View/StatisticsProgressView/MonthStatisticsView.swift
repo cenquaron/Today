@@ -39,6 +39,7 @@ extension MonthStatisticsView {
     private func setupUI() {
         setupContentView()
         setupTitleDailyView()
+        setupMonthTaskContentView()
         setupMonthProgressView()
     }
     
@@ -63,16 +64,27 @@ extension MonthStatisticsView {
         ])
     }
     
+    private func setupMonthTaskContentView() {
+        contentView.addSubview(monthTaskContentView)
+        
+        NSLayoutConstraint.activate([
+            monthTaskContentView.topAnchor.constraint(equalTo: titleMonthLabel.bottomAnchor, constant: 10),
+            monthTaskContentView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20),
+            monthTaskContentView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -20),
+            monthTaskContentView.heightAnchor.constraint(equalToConstant: 330)
+        ])
+    }
+    
     
     private func setupMonthProgressView() {
         contentView.addSubview(monthView)
         monthView.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
-            monthView.topAnchor.constraint(equalTo: titleMonthLabel.bottomAnchor, constant: 10),
-            monthView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20),
-            monthView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -20),
-            monthView.heightAnchor.constraint(equalToConstant: 330)
+            monthView.topAnchor.constraint(equalTo: monthTaskContentView.topAnchor),
+            monthView.leadingAnchor.constraint(equalTo: monthTaskContentView.leadingAnchor),
+            monthView.trailingAnchor.constraint(equalTo: monthTaskContentView.trailingAnchor),
+            monthView.bottomAnchor.constraint(equalTo: monthTaskContentView.bottomAnchor)
         ])
     }
 }
@@ -93,7 +105,7 @@ extension MonthStatisticsView {
         label.font = UIFont.preferredFont(forTextStyle: .body)
         label.adjustsFontForContentSizeCategory = true
         label.textColor = .labelPrimary
-        label.text = "Year Performance".uppercased()
+        label.text = "yearPerformance".localizable.uppercased()
         return label
     }
 }

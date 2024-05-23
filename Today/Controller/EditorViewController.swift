@@ -35,7 +35,7 @@ class EditorViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        title = "Add Reminder"
+        title = "editorViewTitle".localizable
         view.backgroundColor = .backPrimary
         setupUI()
         update()
@@ -48,18 +48,18 @@ class EditorViewController: UIViewController {
     private func update() {
         titleField.delegate = self
         
-        titleLabel.text = "TITLE"
-        titleField.placeholder = "Что нужно делать?" //Accesebility
+        titleLabel.text = "editorTitle".localizable.uppercased()
+        titleField.placeholder = "editorTitleField".localizable
         titleField.text = reminder.title
         
-        dateLabel.text = "DATE"
+        dateLabel.text = "editorDate".localizable.uppercased()
         datePicker.date = reminder.dueDate
         
-        timerTextLabel.text = "TIME"
+        timerTextLabel.text = "editorTime".localizable.uppercased()
         timerTextLabel.font = .boldSystemFont(ofSize: 14)
         timerPicker.date = reminder.dueDate
         
-        notesLabel.text = "NOTES"
+        notesLabel.text = "editorNotes".localizable.uppercased()
         notesField.text = reminder.notes
     }
     

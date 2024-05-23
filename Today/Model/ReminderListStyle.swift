@@ -8,11 +8,11 @@ enum ReminderListStyle: Int {
     var name: String {
         switch self {
         case .today:
-            return NSLocalizedString("Today", comment: "Today style name")
+            return NSLocalizedString("Today".localizable, comment: "Today style name")
         case .future:
-            return NSLocalizedString("Future", comment: "Future style name")
+            return NSLocalizedString("Future".localizable, comment: "Future style name")
         case .all:
-            return NSLocalizedString("All", comment: "All style name")
+            return NSLocalizedString("All".localizable, comment: "All style name")
         }
     }
     

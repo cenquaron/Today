@@ -1,6 +1,5 @@
 import UIKit
 import EventKit
-import QuartzCore
 
 class ReminderListViewController: UIViewController {
     

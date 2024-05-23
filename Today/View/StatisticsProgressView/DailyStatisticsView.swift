@@ -33,7 +33,7 @@ class DailyStatisticsView: UIView {
     // MARK: - Selectors
     private func updateUI() {
         dailyView.backgroundColor = .todayListCellBackground
-        let last10Days = changeDailyGraph.currentTitle == "last 10 day >".uppercased()
+        let last10Days = changeDailyGraph.currentTitle == "option10DailyButton".localizable.uppercased()
         dailyView.displayLast10Days = last10Days
         let dailyActivities = calculateDailyActivities(from: reminders, last10Days: last10Days)
         
@@ -48,7 +48,10 @@ class DailyStatisticsView: UIView {
 
     private func calculateDailyActivities(from reminders: [Reminder], last10Days: Bool) -> [CGFloat] {
         let (startOfRange, endOfRange) = getDateRange(last10Days: last10Days)
-        let filteredReminders = reminders.filter { $0.dueDate >= startOfRange && $0.dueDate <= endOfRange }
+        let filteredReminders = reminders.filter {
+            let reminderDate = Calendar.current.startOfDay(for: $0.dueDate)
+            return reminderDate >= startOfRange && reminderDate <= endOfRange
+        }
         
         let numberOfDays = last10Days ? 10 : 7
         var dailyActivities: [CGFloat] = Array(repeating: 0, count: numberOfDays)
@@ -75,8 +78,8 @@ class DailyStatisticsView: UIView {
 
     private func getDateRange(last10Days: Bool) -> (Date, Date) {
         let calendar = Calendar.current
-        let today = Date()
-        var startOfRange = calendar.startOfDay(for: today)
+        let today = calendar.startOfDay(for: Date())
+        var startOfRange = today
         
         if last10Days {
             startOfRange = calendar.date(byAdding: .day, value: -9, to: startOfRange)!
@@ -91,7 +94,8 @@ class DailyStatisticsView: UIView {
 
     private func getDayIndex(for date: Date, startOfRange: Date) -> Int {
         let calendar = Calendar.current
-        let components = calendar.dateComponents([.day], from: startOfRange, to: date)
+        let startOfDayDate = calendar.startOfDay(for: date)
+        let components = calendar.dateComponents([.day], from: startOfRange, to: startOfDayDate)
         
         if let dayIndex = components.day, dayIndex >= 0 {
             return dayIndex
@@ -101,18 +105,17 @@ class DailyStatisticsView: UIView {
     }
     
     @objc func didTapChangeGraphView(_ sender: UIButton) {
-        if sender.currentTitle == "last 7 day >".uppercased() {
-            sender.setTitle("last 10 day >".uppercased(), for: .normal)
+        if sender.currentTitle == "option7DailyButton".localizable.uppercased() {
+            sender.setTitle("option10DailyButton".localizable.uppercased(), for: .normal)
         } else {
-            sender.setTitle("last 7 day >".uppercased(), for: .normal)
+            sender.setTitle("option7DailyButton".localizable.uppercased(), for: .normal)
         }
-        
         updateUI()
     }
 }
 
 
-// MARK: - Setup Constrain
+// MARK: - Setup Constraints
 extension DailyStatisticsView {
     private func setupUI() {
         setupContentView()
@@ -203,14 +206,14 @@ extension DailyStatisticsView {
         label.font = UIFont.preferredFont(forTextStyle: .body)
         label.adjustsFontForContentSizeCategory = true
         label.textColor = .labelPrimary
-        label.text = "daily performance".uppercased()
+        label.text = "dailyPerformance".localizable.uppercased()
         return label
     }
     
     private static func noTasksLabel() -> UILabel {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.text = "На этой неделе вы не выполнили ни одной задачи"
+        label.text = "noTasksLabel".localizable
         label.textAlignment = .center
         label.font = UIFont.preferredFont(forTextStyle: .title1)
         label.textColor = .labelTertiary
@@ -224,7 +227,7 @@ extension DailyStatisticsView {
     private func optionButton() -> UIButton {
         let btn = UIButton(type: .system)
         btn.translatesAutoresizingMaskIntoConstraints = false
-        btn.setTitle("last 7 day >".uppercased(), for: .normal)
+        btn.setTitle("option7DailyButton".localizable.uppercased(), for: .normal)
         btn.titleLabel?.font = UIFont.preferredFont(forTextStyle: .body)
         btn.adjustsImageSizeForAccessibilityContentSizeCategory = true
         btn.setTitleColor(.labelPrimary, for: .normal)

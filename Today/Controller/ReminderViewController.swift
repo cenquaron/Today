@@ -31,7 +31,7 @@ class ReminderViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        title = "Reminder"
+        title = "reminderViewTitle".localizable
         view.backgroundColor = .backPrimary
         setupUI()
         update()

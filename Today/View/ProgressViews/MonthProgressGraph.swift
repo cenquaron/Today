@@ -4,7 +4,7 @@ class MonthProgressView: UIView {
     
     //MARK: - Variables
     private var reminders: [Reminder] = []
-
+    
     
     //MARK: - UI Components
     var dataPoints: [CGFloat] = [] {
@@ -18,7 +18,7 @@ class MonthProgressView: UIView {
             setNeedsDisplay()
         }
     }
-
+    
     
     //MARK: - LifeCycle
     init(reminders: [Reminder]) {
@@ -32,7 +32,7 @@ class MonthProgressView: UIView {
         super.init(coder: coder)
         setupData()
     }
-
+    
     
     //MARK: - Selectors
     private func setupData() {
@@ -72,16 +72,17 @@ class MonthProgressView: UIView {
         let margin: CGFloat = 40
         let chartMargin: CGFloat = 10
         let spacing = (rect.width - 2 * margin) / CGFloat(dataPoints.count - 1)
+        let verticalOffset: CGFloat = 20
         
         let maxDataPoint = dataPoints.max() ?? 1
-        let scale = (rect.height - 2 * margin) / maxDataPoint
+        let scale = (rect.height - 2 * margin - verticalOffset) / maxDataPoint
         
         let path = UIBezierPath()
         let circlePath = UIBezierPath()
         
         for (index, dataPoint) in dataPoints.enumerated() {
             let x = margin + CGFloat(index) * spacing
-            let y = rect.height - margin - dataPoint * scale
+            let y = rect.height - margin - dataPoint * scale - verticalOffset
             
             if index == 0 {
                 path.move(to: CGPoint(x: x, y: y))
@@ -102,7 +103,7 @@ class MonthProgressView: UIView {
         
         for (index, month) in months.enumerated() {
             let x = margin + CGFloat(index) * spacing
-            let label = UILabel(frame: CGRect(x: x - 15, y: rect.height - margin + 5, width: 30, height: 20))
+            let label = UILabel(frame: CGRect(x: x - 15, y: rect.height - margin + 5 - verticalOffset, width: 30, height: 20))
             label.text = month
             label.font = UIFont.systemFont(ofSize: 10)
             label.textAlignment = .center
@@ -111,7 +112,7 @@ class MonthProgressView: UIView {
         
         let yAxisLabelCount = 6
         for i in 0..<yAxisLabelCount {
-            let y = rect.height - margin - (CGFloat(i) * (rect.height - 2 * margin) / CGFloat(yAxisLabelCount - 1))
+            let y = rect.height - margin - (CGFloat(i) * (rect.height - 2 * margin - verticalOffset) / CGFloat(yAxisLabelCount - 1)) - verticalOffset
             let value = (maxDataPoint / CGFloat(yAxisLabelCount - 1)) * CGFloat(i)
             
             let label = UILabel(frame: CGRect(x: 0, y: y - 10, width: 30, height: 20))
@@ -127,10 +128,5 @@ class MonthProgressView: UIView {
             gridLine.lineWidth = 0.5
             gridLine.stroke()
         }
-        
-        let borderPath = UIBezierPath(rect: CGRect(x: margin, y: chartMargin, width: rect.width - 2 * margin, height: rect.height - margin - chartMargin))
-        UIColor.orange.setStroke()
-        borderPath.lineWidth = 1
-        borderPath.stroke()
     }
 }

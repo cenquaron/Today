@@ -1,0 +1,24 @@
+// CreateTableViewCell
+"createTaskOnTableView" = "Create Task";
+
+
+// Reminder Controller
+"reminderViewTitle" = "Reminder";
+
+
+// Editor Controller
+"editorViewTitle" = "Add Reminder";
+"editorTitleField" = "What should I do?";
+"editorTitle" = "title";
+"editorDate" = "date";
+"editorTime" = "time";
+"editorNotes" = "notes";
+
+
+//Progress Controller
+"progressViewTitle" = "Progress View";
+"noTasksLabel" = "You haven't completed any tasks this week";
+"option7DailyButton" = "last 7 day >";
+"option10DailyButton" = "last 10 day >";
+"dailyPerformance" = "daily performance";
+"yearPerformance" = "year performance";
