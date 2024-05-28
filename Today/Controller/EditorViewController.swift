@@ -95,7 +95,18 @@ class EditorViewController: UIViewController {
             onSave?()
             self.dismiss(animated: true)
         } catch {
-            print("failed save \(error)")
+            TodayError.failedSavingReminders
+            let alertFailedSaveRemidner = UIAlertController(
+                title: "titleAlert".localizable,
+                message: "titleMessage".localizable,
+                preferredStyle: .alert)
+            let cancelAlert = UIAlertAction(
+                title: "titleCancel".localizable,
+                style: .cancel,
+                handler: nil)
+            alertFailedSaveRemidner.addAction(cancelAlert)
+
+            self.present(alertFailedSaveRemidner, animated: true)
         }
     }
 }

@@ -5,6 +5,7 @@ enum TodayError: LocalizedError {
     case accessRestricted
     case failedReadingCalendarItem
     case failedReadingReminders
+    case failedSavingReminders
     case reminderHasNoDueDate
     case unknown
 
@@ -22,6 +23,9 @@ enum TodayError: LocalizedError {
             return NSLocalizedString(
                 "Failed to read a calendar item.", comment: "failed reading calendar item error description"
             )
+        case .failedSavingReminders:
+            return NSLocalizedString(
+                "failed to save reminder", comment: "failed saving reminder item error description")
         case .failedReadingReminders:
             return NSLocalizedString(
                 "Failed to read reminders.", comment: "failed reading reminders error description")

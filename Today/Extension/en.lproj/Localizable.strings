@@ -22,3 +22,9 @@
 "option10DailyButton" = "last 10 day >";
 "dailyPerformance" = "daily performance";
 "yearPerformance" = "year performance";
+
+
+//TodayError.failedSavingReminders
+"titleAlert" = "Save error";
+"titleMessage" = "You can not save, success inheritance";
+"titleCancel" = "Cancel";

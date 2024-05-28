@@ -33,3 +33,9 @@
 //extension ReminderListStyle
 "Future" = "Предстоящие";
 "All" = "Все";
+
+
+//TodayError.failedSavingReminders
+"titleAlert" = "Ошибка сохранения";
+"titleMessage" = "Разрешили в настройках наследование";
+"titleCancel" = "Отмена";
