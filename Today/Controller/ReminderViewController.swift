@@ -4,7 +4,7 @@ class ReminderViewController: UIViewController {
     
     //MARK: - Variable
     private var picSquareHeightConstraint: NSLayoutConstraint?
-    private var reminder: Reminder
+    private var reminder: Reminder!
     
     
     //MARK: - UI Components
@@ -60,7 +60,7 @@ class ReminderViewController: UIViewController {
         descriptionImage.image = UIImage(systemName: "note")
     }
     
-    @objc private func didTapEditButton() {
+    @objc func didTapEditButton() {
         let pushEditViewController = EditorViewController(reminder: reminder)
         self.navigationController?.pushViewController(pushEditViewController, animated: true)
     }

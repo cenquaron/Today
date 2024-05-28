@@ -14,7 +14,6 @@
 		C881BA652BFA0D7400300766 /* DailyStatisticsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C881BA642BFA0D7400300766 /* DailyStatisticsView.swift */; };
 		C881BA672BFA178900300766 /* MonthProgressGraph.swift in Sources */ = {isa = PBXBuildFile; fileRef = C881BA662BFA178900300766 /* MonthProgressGraph.swift */; };
 		C881BA692BFA17D800300766 /* MonthStatisticsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C881BA682BFA17D800300766 /* MonthStatisticsView.swift */; };
-		C881BA6D2BFCDD6200300766 /* EditorViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = C881BA6C2BFCDD6100300766 /* EditorViews.swift */; };
 		C8997E252BD848E200C5E01B /* CAGradientLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8997E242BD848E200C5E01B /* CAGradientLayer.swift */; };
 		C8997E272BD8F41700C5E01B /* ReminderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8997E262BD8F41700C5E01B /* ReminderViewController.swift */; };
 		C8997E292BD8F7D100C5E01B /* EKReminder.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8997E282BD8F7D100C5E01B /* EKReminder.swift */; };
@@ -24,11 +23,16 @@
 		C8C7798F2BE155EB00CC33B4 /* DailyProgressGraph.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8C7798E2BE155EB00CC33B4 /* DailyProgressGraph.swift */; };
 		C8C78C272BFFB29D00A86739 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = C8C78C252BFFB29D00A86739 /* Localizable.strings */; };
 		C8C78C2A2BFFB31A00A86739 /* String+localizable.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8C78C292BFFB31A00A86739 /* String+localizable.swift */; };
+		C8C78C2C2C00857D00A86739 /* ReminderListViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8C78C2B2C00857D00A86739 /* ReminderListViewControllerTests.swift */; };
+		C8C78C2E2C008ED200A86739 /* ReminderViewControllerTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8C78C2D2C008ED200A86739 /* ReminderViewControllerTest.swift */; };
+		C8C78C302C0094BB00A86739 /* EditorViewControllerTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8C78C2F2C0094BB00A86739 /* EditorViewControllerTest.swift */; };
+		C8C78C322C00964500A86739 /* StatisticsViewControllerTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8C78C312C00964500A86739 /* StatisticsViewControllerTest.swift */; };
+		C8C78C352C0099D700A86739 /* DailyStatisticsViewControllerTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8C78C342C0099D700A86739 /* DailyStatisticsViewControllerTest.swift */; };
+		C8C78C372C009E2F00A86739 /* MonthStatisticsViewControllerTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8C78C362C009E2F00A86739 /* MonthStatisticsViewControllerTest.swift */; };
 		C8FCFA042BD7C0B30018BB63 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8FCFA032BD7C0B30018BB63 /* AppDelegate.swift */; };
 		C8FCFA062BD7C0B30018BB63 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8FCFA052BD7C0B30018BB63 /* SceneDelegate.swift */; };
 		C8FCFA082BD7C0B30018BB63 /* ReminderListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8FCFA072BD7C0B30018BB63 /* ReminderListViewController.swift */; };
 		C8FCFA0D2BD7C0B40018BB63 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C8FCFA0C2BD7C0B40018BB63 /* Assets.xcassets */; };
-		C8FCFA1B2BD7C0B50018BB63 /* TodayTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8FCFA1A2BD7C0B50018BB63 /* TodayTests.swift */; };
 		C8FCFA252BD7C0B50018BB63 /* TodayUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8FCFA242BD7C0B50018BB63 /* TodayUITests.swift */; };
 		C8FCFA272BD7C0B50018BB63 /* TodayUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8FCFA262BD7C0B50018BB63 /* TodayUITestsLaunchTests.swift */; };
 		C8FCFA362BD7C15E0018BB63 /* EditorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8FCFA352BD7C15E0018BB63 /* EditorViewController.swift */; };
@@ -65,7 +69,6 @@
 		C881BA642BFA0D7400300766 /* DailyStatisticsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyStatisticsView.swift; sourceTree = "<group>"; };
 		C881BA662BFA178900300766 /* MonthProgressGraph.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonthProgressGraph.swift; sourceTree = "<group>"; };
 		C881BA682BFA17D800300766 /* MonthStatisticsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonthStatisticsView.swift; sourceTree = "<group>"; };
-		C881BA6C2BFCDD6100300766 /* EditorViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditorViews.swift; sourceTree = "<group>"; };
 		C8997E242BD848E200C5E01B /* CAGradientLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CAGradientLayer.swift; sourceTree = "<group>"; };
 		C8997E262BD8F41700C5E01B /* ReminderViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReminderViewController.swift; sourceTree = "<group>"; };
 		C8997E282BD8F7D100C5E01B /* EKReminder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EKReminder.swift; sourceTree = "<group>"; };
@@ -76,6 +79,12 @@
 		C8C78C262BFFB29D00A86739 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		C8C78C282BFFB2B300A86739 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/Localizable.strings; sourceTree = "<group>"; };
 		C8C78C292BFFB31A00A86739 /* String+localizable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+localizable.swift"; sourceTree = "<group>"; };
+		C8C78C2B2C00857D00A86739 /* ReminderListViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReminderListViewControllerTests.swift; sourceTree = "<group>"; };
+		C8C78C2D2C008ED200A86739 /* ReminderViewControllerTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReminderViewControllerTest.swift; sourceTree = "<group>"; };
+		C8C78C2F2C0094BB00A86739 /* EditorViewControllerTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditorViewControllerTest.swift; sourceTree = "<group>"; };
+		C8C78C312C00964500A86739 /* StatisticsViewControllerTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatisticsViewControllerTest.swift; sourceTree = "<group>"; };
+		C8C78C342C0099D700A86739 /* DailyStatisticsViewControllerTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyStatisticsViewControllerTest.swift; sourceTree = "<group>"; };
+		C8C78C362C009E2F00A86739 /* MonthStatisticsViewControllerTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonthStatisticsViewControllerTest.swift; sourceTree = "<group>"; };
 		C8FCFA002BD7C0B30018BB63 /* Today.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Today.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C8FCFA032BD7C0B30018BB63 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		C8FCFA052BD7C0B30018BB63 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -83,7 +92,6 @@
 		C8FCFA0C2BD7C0B40018BB63 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		C8FCFA112BD7C0B40018BB63 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C8FCFA162BD7C0B50018BB63 /* TodayTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TodayTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		C8FCFA1A2BD7C0B50018BB63 /* TodayTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayTests.swift; sourceTree = "<group>"; };
 		C8FCFA202BD7C0B50018BB63 /* TodayUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TodayUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		C8FCFA242BD7C0B50018BB63 /* TodayUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayUITests.swift; sourceTree = "<group>"; };
 		C8FCFA262BD7C0B50018BB63 /* TodayUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayUITestsLaunchTests.swift; sourceTree = "<group>"; };
@@ -140,12 +148,14 @@
 			path = ProgressViews;
 			sourceTree = "<group>";
 		};
-		C881BA6B2BFCDCEF00300766 /* ReminderViews */ = {
+		C8C78C332C0099BB00A86739 /* StaticticsViews */ = {
 			isa = PBXGroup;
 			children = (
-				C881BA6C2BFCDD6100300766 /* EditorViews.swift */,
+				C8C78C312C00964500A86739 /* StatisticsViewControllerTest.swift */,
+				C8C78C342C0099D700A86739 /* DailyStatisticsViewControllerTest.swift */,
+				C8C78C362C009E2F00A86739 /* MonthStatisticsViewControllerTest.swift */,
 			);
-			path = ReminderViews;
+			path = StaticticsViews;
 			sourceTree = "<group>";
 		};
 		C8FCF9F72BD7C0B30018BB63 = {
@@ -184,7 +194,10 @@
 		C8FCFA192BD7C0B50018BB63 /* TodayTests */ = {
 			isa = PBXGroup;
 			children = (
-				C8FCFA1A2BD7C0B50018BB63 /* TodayTests.swift */,
+				C8C78C2B2C00857D00A86739 /* ReminderListViewControllerTests.swift */,
+				C8C78C2D2C008ED200A86739 /* ReminderViewControllerTest.swift */,
+				C8C78C2F2C0094BB00A86739 /* EditorViewControllerTest.swift */,
+				C8C78C332C0099BB00A86739 /* StaticticsViews */,
 			);
 			path = TodayTests;
 			sourceTree = "<group>";
@@ -232,9 +245,9 @@
 			isa = PBXGroup;
 			children = (
 				C8FCFA392BD7CCFE0018BB63 /* Remidner.swift */,
-				C8FCFA482BD7D31E0018BB63 /* Date+Today.swift */,
 				C82942E42BD822130004E1BC /* ReminderListStyle.swift */,
 				C82942E02BD821BB0004E1BC /* ReminderStore.swift */,
+				C8997E282BD8F7D100C5E01B /* EKReminder.swift */,
 				C82942E22BD821CE0004E1BC /* TodayError.swift */,
 			);
 			path = Model;
@@ -243,7 +256,6 @@
 		C8FCFA3B2BD7CD170018BB63 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				C881BA6B2BFCDCEF00300766 /* ReminderViews */,
 				C83F1A642BDAA8F2001BBCDF /* StatisticsProgressView */,
 				C881BA6A2BFCD90900300766 /* ProgressViews */,
 				C8FCFA402BD7CD970018BB63 /* UITableViewCell */,
@@ -264,9 +276,9 @@
 			isa = PBXGroup;
 			children = (
 				C8FCFA442BD7D2730018BB63 /* UIFont.swift */,
+				C8FCFA482BD7D31E0018BB63 /* Date+Today.swift */,
 				C8FCFA462BD7D2F90018BB63 /* UIView.swift */,
 				C8997E242BD848E200C5E01B /* CAGradientLayer.swift */,
-				C8997E282BD8F7D100C5E01B /* EKReminder.swift */,
 				C8997E2A2BD9005900C5E01B /* Reminder.swift */,
 				C8C78C292BFFB31A00A86739 /* String+localizable.swift */,
 				C8C78C252BFFB29D00A86739 /* Localizable.strings */,
@@ -426,7 +438,6 @@
 				C8FCFA472BD7D2F90018BB63 /* UIView.swift in Sources */,
 				C8997E292BD8F7D100C5E01B /* EKReminder.swift in Sources */,
 				C8997E2B2BD9005900C5E01B /* Reminder.swift in Sources */,
-				C881BA6D2BFCDD6200300766 /* EditorViews.swift in Sources */,
 				C881BA672BFA178900300766 /* MonthProgressGraph.swift in Sources */,
 				C881BA652BFA0D7400300766 /* DailyStatisticsView.swift in Sources */,
 				C82942E12BD821BB0004E1BC /* ReminderStore.swift in Sources */,
@@ -438,7 +449,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C8FCFA1B2BD7C0B50018BB63 /* TodayTests.swift in Sources */,
+				C8C78C2E2C008ED200A86739 /* ReminderViewControllerTest.swift in Sources */,
+				C8C78C322C00964500A86739 /* StatisticsViewControllerTest.swift in Sources */,
+				C8C78C2C2C00857D00A86739 /* ReminderListViewControllerTests.swift in Sources */,
+				C8C78C352C0099D700A86739 /* DailyStatisticsViewControllerTest.swift in Sources */,
+				C8C78C372C009E2F00A86739 /* MonthStatisticsViewControllerTest.swift in Sources */,
+				C8C78C302C0094BB00A86739 /* EditorViewControllerTest.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -612,7 +628,6 @@
 				INFOPLIST_FILE = "Today/Support File/Info.plist";
 				INFOPLIST_KEY_NSRemindersUsageDescription = "Your reminders can help you stay on track";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
-				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				IPHONEOS_DEPLOYMENT_TARGET = 17.4;
@@ -641,7 +656,6 @@
 				INFOPLIST_FILE = "Today/Support File/Info.plist";
 				INFOPLIST_KEY_NSRemindersUsageDescription = "Your reminders can help you stay on track";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
-				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				IPHONEOS_DEPLOYMENT_TARGET = 17.4;

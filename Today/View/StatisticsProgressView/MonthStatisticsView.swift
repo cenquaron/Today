@@ -3,7 +3,7 @@ import UIKit
 class MonthStatisticsView: UIView {
     
     //MARK: - Variables
-    private var reminders: [Reminder] = []
+    var reminders: [Reminder] = []
     
     
     //MARK: - UI Components
@@ -28,7 +28,7 @@ class MonthStatisticsView: UIView {
     
     
     //MARK: - Selectors
-    private func updateUI() {
+    func updateUI() {
         monthView.backgroundColor = .todayListCellBackground
     }
 }

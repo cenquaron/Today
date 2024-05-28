@@ -1,23 +1,23 @@
-//
-//  TodayTests.swift
-//  TodayTests
-//
-//  Created by C E N Q U A R O N on 23/4/24.
-//
-
 import XCTest
 @testable import Today
 
-final class TodayTests: XCTestCase {
-
+final class ReminderViewControllerTest: XCTestCase {
+    
+    var viewController: ReminderViewController!
+    var reminders: Reminder!
+    
     override func setUpWithError() throws {
-        // Put setup code here. This method is called before the invocation of each test method in the class.
+        reminders = Reminder(title: "Test Reminder", dueDate: Date(), notes: "Test notes")
+        viewController = ReminderViewController(reminder: reminders)
+        viewController.loadViewIfNeeded()
     }
-
+    
     override func tearDownWithError() throws {
         // Put teardown code here. This method is called after the invocation of each test method in the class.
+        viewController = nil
+        reminders = nil
     }
-
+    
     func testExample() throws {
         // This is an example of a functional test case.
         // Use XCTAssert and related functions to verify your tests produce the correct results.
@@ -25,12 +25,12 @@ final class TodayTests: XCTestCase {
         // Mark your test throws to produce an unexpected failure when your test encounters an uncaught error.
         // Mark your test async to allow awaiting for asynchronous code to complete. Check the results with assertions afterwards.
     }
-
+    
     func testPerformanceExample() throws {
         // This is an example of a performance test case.
         self.measure {
             // Put the code you want to measure the time of here.
         }
     }
-
+    
 }

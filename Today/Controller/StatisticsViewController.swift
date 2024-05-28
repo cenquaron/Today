@@ -10,8 +10,8 @@ class StatisticsViewController: UIViewController {
     //MARK: - UI Components
     private let scrollView = scrollView()
     private let contentView = contentView()
-    private var dailyProgressView: DailyStatisticsView!
-    private var monthProgressView: MonthStatisticsView!
+    var dailyProgressView: DailyStatisticsView!
+    var monthProgressView: MonthStatisticsView!
     
     
     //MARK: - LifeCycle

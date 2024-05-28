@@ -68,7 +68,7 @@ class ReminderListViewController: UIViewController {
     
     
     //MARK: - Selectors
-    private var progress: CGFloat {
+    var progress: CGFloat {
         let chunkSize = 1.0 / CGFloat(filterReminder.count)
         let progress = filterReminder.reduce(0.0) {
             let chunk = $1.isComplete ? chunkSize : 0
@@ -137,12 +137,12 @@ class ReminderListViewController: UIViewController {
         }
     }
     
-    private func reminder(withId id: Reminder.ID) -> Reminder {
+    func reminder(withId id: Reminder.ID) -> Reminder {
         let index = reminderItem.indexOfReminder(withId: id)
         return reminderItem[index]
     }
     
-    private func completeReminder(withId id: Reminder.ID) {
+    func completeReminder(withId id: Reminder.ID) {
         if let index = reminderItem.firstIndex(where: { $0.id == id }) {
             reminderItem[index].isComplete.toggle()
             updateReminder(reminderItem[index])
@@ -151,7 +151,7 @@ class ReminderListViewController: UIViewController {
         }
     }
     
-    private func addReminder() {
+    func addReminder() {
         let newReminder = Reminder(title: "", dueDate: Date(), notes: " ")
         let editorViewController = EditorViewController(reminder: newReminder)
         editorViewController.delegate = self

@@ -20,9 +20,8 @@
 "noTasksLabel" = "На этой неделе вы не выполнили ни одной задачи";
 "option7DailyButton" = "посл. 7 дней >";
 "option10DailyButton" = "посл. 10 дней >";
-"dailyPerformance" = "Днев. статистика";
+"dailyPerformance" = "Дневная стат.";
 "yearPerformance" = "Статистика за год";
-
 
 
 //extension Date

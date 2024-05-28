@@ -13,14 +13,14 @@ class EditorViewController: UIViewController {
     private let scrollView = scrollView()
     private let contentView = contentView()
     private let titleLabel = labelText()
-    private let titleField = fieldText()
+    let titleField = fieldText()
     private let dateLabel = labelText()
     private let dateStack = dateView()
-    private let datePicker = datePicker()
+    let datePicker = datePicker()
     private let timerTextLabel = labelText()
-    private let timerPicker = timePicker()
+    let timerPicker = timePicker()
     private let notesLabel = labelText()
-    private let notesField = notesText()
+    let notesField = notesText()
     
     
     //MARK: - LifeCycle

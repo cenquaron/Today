@@ -3,18 +3,18 @@ import UIKit
 class DailyStatisticsView: UIView {
     
     // MARK: - Variables
-    private var reminders: [Reminder] = []
     private var currentRegion: Locale
-    
+    var reminders: [Reminder] = []
+
     
     // MARK: - UI Components
+    private lazy var changeDailyGraph = optionButton()
     private let contentView = contentView()
     private let titleDailyLabel = titleLabel()
-    private let dailyTaskContentView = contentView()
-    private let dailyView = DailyProgressView()
-    private let noTaskMessage = noTasksLabel()
-    private lazy var changeDailyGraph = optionButton()
-    
+    let dailyView = DailyProgressView()
+    let noTaskMessage = noTasksLabel()
+    let dailyTaskContentView = contentView()
+
     
     // MARK: - LifeCycle
     init(reminders: [Reminder], region: Locale = Locale.current) {
@@ -31,7 +31,7 @@ class DailyStatisticsView: UIView {
     
     
     // MARK: - Selectors
-    private func updateUI() {
+    func updateUI() {
         dailyView.backgroundColor = .todayListCellBackground
         let last10Days = changeDailyGraph.currentTitle == "option10DailyButton".localizable.uppercased()
         dailyView.displayLast10Days = last10Days
