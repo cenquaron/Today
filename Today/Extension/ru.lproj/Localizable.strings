@@ -39,3 +39,9 @@
 "titleAlert" = "Ошибка сохранения";
 "titleMessage" = "Разрешили в настройках наследование";
 "titleCancel" = "Отмена";
+
+
+//longTap
+"longTapComplete" = "Отметить";
+"longTapEdit" = "Редактировать";
+"longTapDelete" = "Удалить";

@@ -28,3 +28,9 @@
 "titleAlert" = "Save error";
 "titleMessage" = "You can not save, success inheritance";
 "titleCancel" = "Cancel";
+
+
+//longTap
+"longTapComplete" = "Complete";
+"longTapEdit" = "Edit";
+"longTapDelete" = "Delete";

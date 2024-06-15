@@ -360,14 +360,14 @@ extension ReminderListViewController: UITableViewDataSource, UITableViewDelegate
         let configuration = UIContextMenuConfiguration(identifier: nil, previewProvider: nil) { _ -> UIMenu? in
             guard tableView.cellForRow(at: indexPath) is ReminderItemListCell else { return nil }
             
-            let accomplish = UIAction(title: "Отметить", image: UIImage(systemName: "checkmark.circle.fill")) { [weak self] _ in
+            let accomplish = UIAction(title: "longTapComplete".localizable, image: UIImage(systemName: "checkmark.circle.fill")) { [weak self] _ in
                 guard let self = self else { return }
                 let selectedReminder = self.filterReminder[indexPath.row]
                 self.completeReminder(withId: selectedReminder.id)
                 tableView.reloadData()
             }
   
-            let edit = UIAction(title: "Редактировать", image: UIImage(systemName: "pencil")) { [self] _ in
+            let edit = UIAction(title: "longTapEdit".localizable, image: UIImage(systemName: "pencil")) { [self] _ in
 
                 let selectedReminder = self.filterReminder[indexPath.row]
                 let controller = EditorViewController(reminder: selectedReminder)
@@ -376,7 +376,7 @@ extension ReminderListViewController: UITableViewDataSource, UITableViewDelegate
                 self.present(openController, animated: true)
             }
             
-            let delete = UIAction(title: "Удалить", image: UIImage(systemName: "trash.fill")) { [self] _ in
+            let delete = UIAction(title: "longTapDelete".localizable, image: UIImage(systemName: "trash.fill")) { [self] _ in
                 let deletedReminder = filterReminder[indexPath.row]
                 if let indexInReminders = reminderItem.firstIndex(of: deletedReminder) {
                     reminderItem.remove(at: indexInReminders)
