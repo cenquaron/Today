@@ -9,5 +9,8 @@ The project has
 - MVC architecture
 - Integration with Reminder
 
-https://github.com/cenquaron/Today/assets/146763925/2e1b7187-d6df-4552-a0b6-7ff5eb0b587b
+
+
+
+https://github.com/cenquaron/Today/assets/146763925/be4403bd-9b1e-4b78-85c0-44b33ff1f5b0
 
