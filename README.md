@@ -4,8 +4,9 @@ The application implies a standard todo List pet project, but with the possibili
 
 
 The project has 
-- localization
-- accessibility support
-- mvc architecture
-- design clean code (as far as possible)
+- Localization
+- Accessibility support
+- MVC architecture
+- Integration with Reminder
+
 
